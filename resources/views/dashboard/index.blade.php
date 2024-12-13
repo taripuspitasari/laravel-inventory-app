@@ -4,20 +4,8 @@
     <div class="xl:w-1/2">
         <section class="p-4 bg-white flex justify-evenly items-center rounded-lg mb-4 shadow">
             <div>
-                <h3 class="text-xl md:text-3xl">Hi, {{ auth()->user()->username }}</h3>
+                <h3 class="text-xl md:text-3xl">Hi, {{ explode(' ',auth()->user()->name)[0] }}</h3>
                 <p class="text-sm text-slate-400">Have a nice day!</p>
-                {{-- <ul class="text-sm">
-                    <li>
-                        <a class="flex gap-2 items-center m-1 font-semibold hover:underline" href="/dashboard/partners"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-3">
-                            <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>Manage Partner</a>
-                    </li>
-                    <li>
-                        <a class="flex gap-2 items-center m-1 font-semibold hover:underline" href="/dashboard/categories"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-3">
-                            <path fill-rule="evenodd" d="M12.97 3.97a.75.75 0 0 1 1.06 0l7.5 7.5a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 1 1-1.06-1.06l6.22-6.22H3a.75.75 0 0 1 0-1.5h16.19l-6.22-6.22a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                            </svg>Manage Category</a>
-                    </li>
-                </ul> --}}
             </div>
             <div>
                 <img src="{{ asset('images/blue-dashboard.png') }}" alt="" class="h-36 md:h-52">
@@ -71,8 +59,56 @@
     <div class="xl:w-1/2">
         <section class="h-[calc(100vh-8rem)] bg-white rounded-lg mb-4 shadow">
             <h3 class="font-bold text-center p-2">Incoming Orders</h3>
+            <div class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
+                <div class="flex py-1 items-center justify-between">
+                    <h4 class="font-bold">Order #3445</h4>
+                    <a href="" class="flex items-center justify-center text-white bg-slate-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                        Detail
+                    </a>
+                </div>
+                <table class="rounded-md w-full">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">No</th>
+                            <th scope="col" class="px-4 py-3">Product</th>
+                            <th scope="col" class="px-4 py-3">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b dark:border-gray-700 text-center bg-white">
+                            <td class="px-4 py-3">1</td>  
+                            <td class="px-4 py-3">Stilleto</td>  
+                            <td class="px-4 py-3 text-right">4</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
+                <div class="flex py-1 items-center justify-between">
+                    <h4 class="font-bold">Order #3446</h4>
+                    <a href="" class="flex items-center justify-center text-white bg-slate-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                        Detail
+                    </a>
+                </div>
+                <table class="rounded-md w-full">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">No</th>
+                            <th scope="col" class="px-4 py-3">Product</th>
+                            <th scope="col" class="px-4 py-3">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b dark:border-gray-700 text-center bg-white">
+                            <td class="px-4 py-3">1</td>  
+                            <td class="px-4 py-3">Sneakers</td>  
+                            <td class="px-4 py-3 text-right">10</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
-        
     </div>
 </section>
 @endsection

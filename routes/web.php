@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
@@ -18,12 +17,6 @@ Route::get('/', function () {
 Route::get('/products', function () {
     return view('products', [
         'products' => Product::with('category')->filter(request(['search', 'category']))->latest()->get()
-    ]);
-});
-
-Route::get('/categories/{category}', function (Category $category) {
-    return view('category', [
-        'category' => Category::with('products')->find($category->id)
     ]);
 });
 

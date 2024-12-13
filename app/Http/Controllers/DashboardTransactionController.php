@@ -122,12 +122,6 @@ class DashboardTransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        $statusColors = [
-            'done' => 'text-green-500',
-            'inprogress' => 'text-yellow-500',
-            'cancelled' => 'text-red-500',
-        ];
-
         $subtotal = $transaction->transactionDetails->sum(function ($detail) {
             return $detail->quantity * $detail->price;
         });
@@ -139,7 +133,6 @@ class DashboardTransactionController extends Controller
             "subtotal" => $subtotal,
             "tax" => $tax,
             "total" => $total,
-            "statusColors" => $statusColors
         ]);
     }
 
