@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::orderBy('id', 'desc')->paginate(10);
+        $products = Product::with('category')->filter(request(['search', 'category']))->simplePaginate(10)->withQueryString();
         return ProductResource::collection($products);
     }
 
