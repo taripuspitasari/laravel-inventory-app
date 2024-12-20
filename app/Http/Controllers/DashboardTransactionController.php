@@ -84,13 +84,16 @@ class DashboardTransactionController extends Controller
             $totalAmount = 0;
 
             foreach ($validatedData['items'] as $item) {
-                $totalAmount += $item['quantity'] * $item['price'];
+                $item['subtotal'] = $item['price'] * $item['quantity'];
+
+                $totalAmount += $item['subtotal'];
 
                 Transaction_detail::create([
                     'quantity' => $item['quantity'],
                     'transaction_id' => $transaction->id,
                     'product_id' => $item['item_id'],
-                    'price' => $item['price']
+                    'price' => $item['price'],
+                    'subtotal' => $item['subtotal']
                 ]);
 
                 $currentItem = Product::find($item['item_id']);
