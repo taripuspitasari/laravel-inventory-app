@@ -93,7 +93,7 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCartRequest $request, string $id)
+    public function update(UpdateCartRequest $request, $id)
     {
         $data = $request->validated();
         // $user = auth()->user();
@@ -124,8 +124,48 @@ class CartController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($cartId)
     {
-        //
+        $user = auth()->user();
+
+        $cart = Cart::where('user_id', $user->id)->find($cartId);
+
+        if (!$cart) {
+            return response()->json(['message' => 'Cart not found'], 404);
+        }
+
+        // hapus semua cart items
+        $cart->details()->delete();
+
+        $cart->total_quantity = 0;
+        $cart->total_amount = 0;
+        $cart->save();
+
+        return response()->json(['message' => 'All items removed from cart successfully']);
+    }
+
+    public function destroyItem($cartId, $productId)
+    {
+        $user = auth()->user();
+
+        $cart = Cart::where('user_id', $user->id)->find($cartId);
+
+        if (!$cart) {
+            return response()->json(['message' => 'Cart not found'], 404);
+        }
+
+        $cartItem = Cart_detail::where('cart_id', $cartId)->where('product_id', $productId)->first();
+
+        if (!$cartItem) {
+            return response()->json(['message' => 'Cart item not found'], 404);
+        }
+
+        $cartItem->delete();
+
+        $cart->total_quantity = $cart->details->sum('quantity');
+        $cart->total_amount = $cart->details->sum('subtotal');
+        $cart->save();
+
+        return response()->json(['message' => 'Item removed from cart successfully'], 200);
     }
 }

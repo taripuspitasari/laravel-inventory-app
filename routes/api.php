@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('cart', CartController::class);
+    Route::delete('cart/{cart}/items/{item}', [CartController::class, 'destroyItem']);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);
