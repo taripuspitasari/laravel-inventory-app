@@ -20,58 +20,58 @@ class CartController extends Controller
     {
         $user = auth()->user();
 
-        $cart = Cart::where('user_id', $user->id)->first();
+        $cart = Cart::with('cartDetails')->where('user_id', $user->id)->first();
 
         if (!$cart) {
             return response()->json(['message' => 'Cart is empty'], 200);
         }
 
-        return new CartResource($cart);
+        return response(new CartResource($cart), 201);
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(StoreCartRequest $request)
     {
         $data = $request->validated();
         $user = auth()->user();
 
-        // get cart user
         $cart = Cart::firstOrCreate(
             ['user_id' => $user->id],
             ['total_quantity' => 0, 'total_amount' => 0]
         );
 
-        // get product to access
-        $product = Product::find($data['product_id']);
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
+        foreach ($data['cart_details'] as $cartDetail) {
+            $product = Product::find($cartDetail['product_id']);
+            if (!$product) {
+                return response()->json(['message' => 'Product not found'], 404);
+            }
+
+            $cartItem = Cart_detail::where('cart_id', $cart->id)->where('product_id', $cartDetail['product_id'])->first();
+
+            if ($cartItem) {
+                $cartItem->quantity += $cartDetail['quantity'];
+                $cartItem->price = $product->price;
+                $cartItem->subtotal = $cartItem->quantity * $cartItem->price;
+                $cartItem->save();
+            } else {
+                Cart_detail::create([
+                    'cart_id' => $cart->id,
+                    'product_id' => $cartDetail['product_id'],
+                    'quantity' => $cartDetail['quantity'],
+                    'price' => $product->price,
+                    'subtotal' =>  $cartDetail['quantity'] * $product->price
+                ]);
+            }
         }
 
-
-        $cartItem = Cart_detail::where('cart_id', $cart->id)->where('product_id', $data['product_id'])->first();
-
-        if ($cartItem) {
-            $cartItem->quantity += $data['quantity'];
-            $cartItem->price = $product->price;
-            $cartItem->subtotal = $cartItem->quantity * $cartItem->price;
-            $cartItem->save();
-        } else {
-            $cartItem = Cart_detail::create([
-                'cart_id' => $cart->id,
-                'product_id' => $data['product_id'],
-                'quantity' => $data['quantity'],
-                'price' => $product->price,
-                'subtotal' => $data['quantity'] * $product->price,
-            ]);
-        }
-
-        $cart->total_quantity = $cart->details->sum('quantity');
-        $cart->total_amount = $cart->details->sum('subtotal');
+        $cart->total_quantity = $cart->cartDetails->sum('quantity');
+        $cart->total_amount = $cart->cartDetails->sum('subtotal');
         $cart->save();
 
-        return response(new CartResource($cartItem), 201);
+        return response(new CartResource($cart), 201);
     }
 
     /**
@@ -81,7 +81,7 @@ class CartController extends Controller
     {
         $user = auth()->user();
 
-        $cart = Cart::where('user_id', $user->id)->first();
+        $cart = Cart::with('cartDetails')->where('user_id', $user->id)->first();
 
         if (!$cart) {
             return response()->json(['message' => 'Cart not found'], 404);
