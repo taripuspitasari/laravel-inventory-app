@@ -16,10 +16,10 @@ class CartResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'total_quantity' => $this->total_quantity,
-            'total_amount' => $this->total_amount,
-            'details' => CartDetailResource::collection($this->whenLoaded('cartDetails')),
+            'product_name' => $this->product->name,
+            'price' => $this->product->price,
+            'quantity' => $this->quantity,
+            'subtotal' => $this->product->price * $this->quantity
         ];
     }
 }

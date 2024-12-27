@@ -17,9 +17,11 @@ return new class extends Migration
                 table: 'users',
                 indexName: 'carts_users_id'
             )->cascadeOnDelete();
-            $table->integer('total_quantity');
-            $table->decimal('total_amount', 10, 0);
-            $table->boolean('is_checked_out')->default(false);
+            $table->foreignId('product_id')->constrained(
+                table: 'products',
+                indexName: 'carts_products_id'
+            );
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
