@@ -14,9 +14,9 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = auth()->user();
+        $user = $request->user();
         $carts = Cart::where('user_id', $user->id)->with('product')->get();
 
         if (!$carts) {
@@ -33,7 +33,7 @@ class CartController extends Controller
     public function store(StoreCartRequest $request)
     {
         $data = $request->validated();
-        $user = auth()->user();
+        $user = $request->user();
 
         $cart = Cart::firstOrCreate(
             ['product_id' => $data['product_id'], 'user_id' => $user->id],
@@ -62,7 +62,7 @@ class CartController extends Controller
     public function update(UpdateCartRequest $request, $id)
     {
         $data = $request->validated();
-        $user = auth()->user();
+        $user = $request->user();
 
         $cart = Cart::where('user_id', $user->id)
             ->where('id', $id)

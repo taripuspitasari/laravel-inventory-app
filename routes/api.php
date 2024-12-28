@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CategoryController;
@@ -14,6 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('cart', CartController::class);
     Route::delete('cart/{cart}/items/{item}', [CartController::class, 'destroyItem']);
+    Route::apiResource('address', AddressController::class);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);
