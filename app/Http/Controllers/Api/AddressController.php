@@ -30,7 +30,7 @@ class AddressController extends Controller
         $data = $request->validated();
         $user = $request->user();
 
-        $address = Address::create([
+        Address::create([
             'user_id' => $user->id,
             'name' => $data['name'],
             'city' => $data['city'],
@@ -39,7 +39,9 @@ class AddressController extends Controller
             'phone_number' => $data['phone_number']
         ]);
 
-        return response(new AddressResource($address), 201);
+        $addresses = Address::where('user_id', $user->id)->get();
+
+        return response(AddressResource::collection($addresses), 200);
     }
 
     /**
@@ -58,6 +60,7 @@ class AddressController extends Controller
     public function update(UpdateAddressRequest $request, string $id)
     {
         $data = $request->validated();
+        $user = $request->user();
 
         $address = Address::findOrFail($id);
 
@@ -69,18 +72,23 @@ class AddressController extends Controller
             'phone_number' => $data['phone_number']
         ]);
 
-        return response(new AddressResource($address), 200);
+        $addresses = Address::where('user_id', $user->id)->get();
+
+        return response(AddressResource::collection($addresses), 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $address = Address::findOrFail($id);
+        $user = $request->user();
 
-        $address->delete();
+        $addres = Address::findOrFail($id);
+        $addres->delete();
 
-        return response()->json(['message' => 'Address deleted successfully'], 200);
+        $addresses = Address::where('user_id', $user->id)->get();
+
+        return response(AddressResource::collection($addresses), 200);
     }
 }
