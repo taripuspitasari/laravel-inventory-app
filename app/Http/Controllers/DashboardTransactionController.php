@@ -76,17 +76,17 @@ class DashboardTransactionController extends Controller
                 'partner_id' => $validatedData['partner_id'],
                 'notes' => $validatedData['notes'],
                 'user_id' => Auth::user()->id,
-                'totalAmount' => 0,
+                'total_amount' => 0,
                 'invoice_number' => $request['invoice_number'],
                 'tax' => 0
             ]);
 
-            $totalAmount = 0;
+            $total_amount = 0;
 
             foreach ($validatedData['items'] as $item) {
                 $item['subtotal'] = $item['price'] * $item['quantity'];
 
-                $totalAmount += $item['subtotal'];
+                $total_amount += $item['subtotal'];
 
                 Transaction_detail::create([
                     'quantity' => $item['quantity'],
@@ -105,10 +105,10 @@ class DashboardTransactionController extends Controller
                 $currentItem->save();
             }
 
-            $tax = $totalAmount * 0.11;
+            $tax = $total_amount * 0.11;
 
             $transaction->tax = $tax;
-            $transaction->totalAmount = $totalAmount + $tax;
+            $transaction->total_amount = $total_amount + $tax;
             $transaction->save();
 
             DB::commit();
@@ -137,29 +137,5 @@ class DashboardTransactionController extends Controller
             "tax" => $tax,
             "total" => $total,
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Transaction $transaction)
-    {
-        //
     }
 }

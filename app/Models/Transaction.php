@@ -9,7 +9,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['transaction_type', 'created_at', 'partner_id', 'user_id', 'totalAmount', 'invoice_number', 'notes', 'transaction_status'];
+    protected $guarded = ['id'];
 
     public function scopeFilter($query, array $filters)
     {
@@ -44,10 +44,5 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public static function countTransactions()
-    {
-        return self::count();
     }
 }

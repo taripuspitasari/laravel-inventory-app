@@ -43,14 +43,4 @@ class Product extends Model
             ->withPivot('quantity', 'price')
             ->withTimestamps();
     }
-
-    public static function countProducts()
-    {
-        return self::count();
-    }
-
-    public static function totalStock()
-    {
-        return self::sum('stock');
-    }
 }

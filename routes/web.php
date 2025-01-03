@@ -6,9 +6,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\DashboardCategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardPartnerController;
 use App\Http\Controllers\DashboardTransactionController;
-use App\Models\Transaction;
 
 Route::get('/', function () {
     return view('index');
@@ -31,16 +31,14 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index', [
-        "title" => "Home",
-        "totalProducts" => Product::countProducts(),
-        "totalStock" => Product::totalStock(),
-        "totalTransactions" => Transaction::countTransactions()
-    ]);
-})->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 Route::resource('/dashboard/products', DashboardProductController::class)->middleware('auth');
 Route::resource('/dashboard/categories', DashboardCategoryController::class)->middleware('auth');
 Route::resource('/dashboard/partners', DashboardPartnerController::class)->middleware('auth');
-Route::resource('/dashboard/transactions', DashboardTransactionController::class)->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/transactions', [DashboardTransactionController::class, 'index']);
+    Route::get('/dashboard/transactions/create', [DashboardTransactionController::class, 'create']);
+    Route::get('/dashboard/transactions/{transaction}', [DashboardTransactionController::class, 'show']);
+    Route::post('/dashboard/transactions', [DashboardTransactionController::class, 'store']);
+});

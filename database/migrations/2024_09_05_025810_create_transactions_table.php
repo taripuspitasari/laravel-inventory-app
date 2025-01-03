@@ -14,16 +14,20 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->enum('transaction_type', ['in', 'out']);
-            $table->timestamp('created_at');
             $table->foreignId('partner_id')->constrained(
                 table: 'partners',
-                indexName: 'products_partners_id'
+                indexName: 'transactions_partners_id'
             );
             $table->foreignId('user_id')->constrained(
                 table: 'users',
-                indexName: 'products_users_id'
+                indexName: 'transactions_users_id'
             );
-            $table->decimal('totalAmount', total: 10, places: 0);
+            $table->decimal('total_amount', total: 10, places: 0);
+            // baru ditambahin
+            $table->decimal('tax', total: 10, places: 0)->nullable();
+            $table->string('invoice_number')->unique();
+            $table->text('notes')->nullable();
+            $table->timestamps();
         });
     }
 

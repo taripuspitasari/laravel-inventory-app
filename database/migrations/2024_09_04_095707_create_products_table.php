@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('stock');
             $table->decimal('price', total: 10, places: 0);
             $table->timestamps();
+            // baru ditambahin
+            $table->boolean('isActive')->default(false);
         });
     }
 

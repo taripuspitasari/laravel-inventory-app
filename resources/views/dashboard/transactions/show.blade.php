@@ -9,7 +9,7 @@
             <span>Amount</span>
         </h2>
         <section class="flex gap-4 items-center mb-2">
-            <p class="text-2xl font-bold">Rp {{ number_format($transaction->totalAmount, 0, ',', '.') }}</p>
+            <p class="text-2xl font-bold">Rp {{ number_format($transaction->total_amount, 0, ',', '.') }}</p>
         </section>
         <hr>
         <section class="flex flex-col">

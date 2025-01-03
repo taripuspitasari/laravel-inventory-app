@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
 {
@@ -14,18 +14,13 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         Category::create([
-            'name' => 'Pakaian',
-            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat laboriosam adipisci nisi dignissimos cupiditate laudantium, illo quas velit harum assumenda.'
+            'name' => 'Food',
+            'description' => 'A selection of delicious and high-quality dishes, including our signature chicken dimsum, savory snacks, and other flavorful options perfect for any time of the day.',
         ]);
 
         Category::create([
-            'name' => 'Aksesoris',
-            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat laboriosam adipisci nisi dignissimos cupiditate laudantium, illo quas velit harum assumenda.'
-        ]);
-
-        Category::create([
-            'name' => 'Sepatu',
-            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat laboriosam adipisci nisi dignissimos cupiditate laudantium, illo quas velit harum assumenda.'
+            'name' => 'Beverages',
+            'description' => 'A variety of refreshing drinks, from classic hot teas to iced sweet beverages, perfectly crafted to complement your meals.',
         ]);
     }
 }

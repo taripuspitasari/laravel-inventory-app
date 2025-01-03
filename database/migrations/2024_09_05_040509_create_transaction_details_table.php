@@ -23,6 +23,9 @@ return new class extends Migration
                 indexName: 'transactionDetails_products_id'
             );
             $table->decimal('price', total: 10, places: 0);
+            // baru ditambahin
+            $table->decimal('subtotal', total: 10, places: 0);
+            $table->timestamps();
         });
     }
 
