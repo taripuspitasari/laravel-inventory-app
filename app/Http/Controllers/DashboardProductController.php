@@ -6,16 +6,23 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ProductService;
 
 class DashboardProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         return view('dashboard.products.index', [
-            'products' => Product::with('category')->filter(request(['search']))->simplePaginate(7)->withQueryString(),
+            'products' => $this->productService->getAllProducts(request(['search'])),
             'title' => 'Products'
         ]);
     }
@@ -45,13 +52,8 @@ class DashboardProductController extends Controller
             'description' => ['required']
         ]);
 
-        if ($request->file('image')) {
-            $validatedData['image'] = $request->file('image')->store('products-images');
-        }
+        $this->productService->storeProduct($validatedData);
 
-        $validatedData['isActive'] = $request->stock > 0;
-
-        Product::create($validatedData);
         return redirect('dashboard/products')->with('success', 'New product has been added!');
     }
 
@@ -93,15 +95,8 @@ class DashboardProductController extends Controller
             'description' => ['required']
         ]);
 
-        $validatedData['isActive'] = $request->stock > 0;
-        if ($request->file('image')) {
-            if ($request->oldImage) {
-                Storage::delete($request->oldImage);
-            }
-            $validatedData['image'] = $request->file('image')->store('products-images');
-        }
+        $this->productService->updateProduct($product, $validatedData);
 
-        Product::where('id', $product->id)->update($validatedData);
         return redirect('dashboard/products')->with('success', 'The product has been updated!');
     }
 
@@ -110,10 +105,8 @@ class DashboardProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        if ($product->image) {
-            Storage::delete($product->image);
-        }
-        Product::destroy($product->id);
+        $this->productService->deleteProduct($product);
+
         return redirect('dashboard/products')->with('success', 'The product has been deleted!');
     }
 }
