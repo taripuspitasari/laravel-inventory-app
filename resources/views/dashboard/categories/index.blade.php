@@ -53,7 +53,7 @@
                     <tbody>
                         @forelse($categories as $category)
                         <tr class="border-b dark:border-gray-700">
-                            <td class="px-4 py-3">{{ $loop->iteration + ($categories->currentPage()-1) * $categories->perPage() }}</td>
+                            <td class="px-4 py-3">{{ $loop->iteration }}</td>
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a href="/dashboard/categories/{{ $category->id }}">{{ $category->name }}</a></th>
                             <td class="px-4 py-3">{{ Str::limit($category->description, 100) }}</td>
                             <td class="px-4 py-3 flex items-center justify-center" x-data="{open:false}">
@@ -90,6 +90,6 @@
                 </table>
             </div>
     </div>
-    {{ $categories->links() }}
+    {{-- {{ $categories->links() }} --}}
 </section>
 @endsection

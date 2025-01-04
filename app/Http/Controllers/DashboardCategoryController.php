@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Services\CategoryService;
 
 class DashboardCategoryController extends Controller
 {
+    protected $categoryService;
+
+    public function __construct(CategoryService $categoryService)
+    {
+        $this->categoryService = $categoryService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -14,7 +22,7 @@ class DashboardCategoryController extends Controller
     {
         return view('dashboard.categories.index', [
             'title' => 'Categories',
-            'categories' => Category::paginate(7)->withQueryString()
+            'categories' => $this->categoryService->getAllCategories()
         ]);
     }
 
@@ -38,7 +46,7 @@ class DashboardCategoryController extends Controller
             'description' => ['required', 'min:3', 'max:255']
         ]);
 
-        Category::create($validatedData);
+        $this->categoryService->createCategory($validatedData);
         return redirect('dashboard/categories')->with('success', 'New category has been added!');
     }
 
@@ -50,7 +58,7 @@ class DashboardCategoryController extends Controller
         return view('dashboard.categories.show', [
             'category' => $category,
             'title' => 'Category Detail',
-            'products' => $category->products()->paginate(5)
+            'products' => $this->categoryService->getCategoryWithProducts($category)
         ]);
     }
 
@@ -75,7 +83,7 @@ class DashboardCategoryController extends Controller
             'description' => ['required', 'min:3', 'max:255']
         ]);
 
-        Category::where('id', $category->id)->update($validatedData);
+        $this->categoryService->updateCategory($category, $validatedData);
         return redirect('dashboard/categories')->with('success', 'The category has been updated!');
     }
 
@@ -84,9 +92,7 @@ class DashboardCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->products()->delete();
-
-        $category->delete();
+        $this->categoryService->deleteCategorywithProducts($category);
         return redirect('dashboard/categories')->with('success', 'The category and its products have been deleted!');
     }
 }

@@ -13,11 +13,6 @@ class ProductService
         return Product::with('category')->filter($filters)->simplePaginate(7)->withQueryString();
     }
 
-    public function getAllCategories()
-    {
-        return Category::all();
-    }
-
     public function storeProduct($data)
     {
         if (isset($data['image'])) {
