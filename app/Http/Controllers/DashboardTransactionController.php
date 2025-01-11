@@ -2,32 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Partner;
-use App\Models\Product;
-use App\Models\Category;
 use App\Models\Transaction;
-use App\Models\Transaction_detail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use App\Services\TransactionService;
 
 class DashboardTransactionController extends Controller
 {
+    protected $transactionService;
+
+    public function __construct(TransactionService $transactionService)
+    {
+        $this->transactionService = $transactionService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $statusColors = [
-            'done' => 'bg-green-500',
-            'inprogress' => 'bg-yellow-500',
-            'cancelled' => 'bg-red-500',
-        ];
-
         return view('dashboard.transactions.index', [
             "title" => "Transactions",
-            "transactions" => Transaction::filter(request(['search', 'filter']))->with('partner')->simplePaginate(7)->withQueryString(),
-            "statusColors" => $statusColors
+            "transactions" => $this->transactionService->getTransactions(request(['search', 'filter']))
         ]);
     }
 
@@ -36,18 +31,7 @@ class DashboardTransactionController extends Controller
      */
     public function create(Request $request)
     {
-        $type = $request->input('type');
-
-        $data = [
-            "title" => $type === "purchase" ? "Create new purchase" : "Create new sale",
-            "type" => $type,
-            "partner" => $type === "purchase" ? "Supplier" : "Customer",
-            "button" => $type === "purchase" ? "Create Purchase" : "Create Sale",
-            "categories" => Category::all(),
-            "products" => Product::all(),
-            "partners" => $type === "purchase" ? Partner::supplier()->get() : Partner::customer()->get()
-        ];
-
+        $data = $this->transactionService->prepareCreateData($request->input('type'));
         return view('dashboard.transactions.create', $data);
     }
 
@@ -67,57 +51,13 @@ class DashboardTransactionController extends Controller
             'items.*.price' => ['required', 'numeric', 'min:0.01']
         ]);
 
-        DB::beginTransaction();
+        $response = $this->transactionService->createTransaction($validatedData, $request['invoice_number']);
 
-        try {
-            $transaction = Transaction::create([
-                'transaction_type' => $validatedData['transaction_type'],
-                'created_at' => $validatedData['date'],
-                'partner_id' => $validatedData['partner_id'],
-                'notes' => $validatedData['notes'],
-                'user_id' => Auth::user()->id,
-                'total_amount' => 0,
-                'invoice_number' => $request['invoice_number'],
-                'tax' => 0
-            ]);
-
-            $total_amount = 0;
-
-            foreach ($validatedData['items'] as $item) {
-                $item['subtotal'] = $item['price'] * $item['quantity'];
-
-                $total_amount += $item['subtotal'];
-
-                Transaction_detail::create([
-                    'quantity' => $item['quantity'],
-                    'transaction_id' => $transaction->id,
-                    'product_id' => $item['item_id'],
-                    'price' => $item['price'],
-                    'subtotal' => $item['subtotal']
-                ]);
-
-                $currentItem = Product::find($item['item_id']);
-                if ($validatedData['transaction_type'] == 'in') {
-                    $currentItem->stock += $item['quantity'];
-                } else {
-                    $currentItem->stock -= $item['quantity'];
-                }
-                $currentItem->save();
-            }
-
-            $tax = $total_amount * 0.11;
-
-            $transaction->tax = $tax;
-            $transaction->total_amount = $total_amount + $tax;
-            $transaction->save();
-
-            DB::commit();
-            return redirect('dashboard/transactions')->with('success', 'The transaction has been added!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            dd($e->getMessage());
-            return redirect('dashboard/transactions')->with('error', 'The transaction is failed!');
+        if ($response['success']) {
+            return redirect('dashboard/transactions')->with('success', $response['message']);
         }
+
+        return redirect('dashboard/transactions')->with('error', $response['message']);
     }
 
     /**
@@ -125,17 +65,10 @@ class DashboardTransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        $subtotal = $transaction->transactionDetails->sum(function ($detail) {
-            return $detail->quantity * $detail->price;
-        });
-        $tax = $subtotal * 0.11;
-        $total = $subtotal + $tax;
-        return view('dashboard.transactions.show', [
-            "title" => "Transactions Details",
-            "transaction" => $transaction->load('transactionDetails.product'),
-            "subtotal" => $subtotal,
-            "tax" => $tax,
-            "total" => $total,
-        ]);
+        $data = $this->transactionService->showTransactionDetails($transaction);
+        return view(
+            'dashboard.transactions.show',
+            array_merge(["title" => "Transactions Details"], $data)
+        );
     }
 }

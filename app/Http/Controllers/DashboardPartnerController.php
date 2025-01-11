@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Partner;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Services\PartnerService;
 
 class DashboardPartnerController extends Controller
 {
+    protected $partnerService;
+
+    public function __construct(PartnerService $partnerService)
+    {
+        $this->partnerService = $partnerService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -15,7 +21,7 @@ class DashboardPartnerController extends Controller
     {
         return view('dashboard.partners.index', [
             'title' => 'Partners',
-            'partners' => Partner::filter(request(['search', 'filter']))->simplePaginate(7)->withQueryString()
+            'partners' => $this->partnerService->getAllPartners(request(['search', 'filter']))
         ]);
     }
 
@@ -42,7 +48,7 @@ class DashboardPartnerController extends Controller
             'address' => ['required', 'min:7', 'max:255']
         ]);
 
-        Partner::create($validatedData);
+        $this->partnerService->createPartner($validatedData);
         return redirect('dashboard/partners')->with('success', 'New partner has been added!');
     }
 
@@ -88,7 +94,7 @@ class DashboardPartnerController extends Controller
 
         $validatedData = $request->validate($rules);
 
-        Partner::where('id', $partner->id)->update($validatedData);
+        $this->partnerService->updatePartner($partner, $validatedData);
 
         return redirect('/dashboard/partners')->with('success', 'Partner has been updated!');
     }
@@ -98,8 +104,7 @@ class DashboardPartnerController extends Controller
      */
     public function destroy(Partner $partner)
     {
-        // Partner::destroy($partner);
-        $partner->delete();
+        $this->partnerService->deletePartner($partner);
         return redirect('/dashboard/partners')->with('success', 'Partner has been deleted!');
     }
 }
