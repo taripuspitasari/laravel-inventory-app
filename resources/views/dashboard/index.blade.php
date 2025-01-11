@@ -40,8 +40,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
                         </svg>
                     </div>
-                    <div class="stat-title">Total Stock</div>
-                    <div class="stat-value">{{ $totalStock }}</div>
+                    <div class="stat-title">All Orders</div>
+                    <div class="stat-value">3</div>
                 </div>
                 <div class="stat">
                     <div class="stat-figure text-secondary">
@@ -57,53 +57,117 @@
         </section>
     </div>
     <div class="xl:w-1/2">
-        <section class="h-[calc(100vh-8rem)] bg-white rounded-lg mb-4 shadow">
-            <h3 class="font-bold text-center p-2">Incoming Orders</h3>
-            <div class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
-                <div class="flex py-1 items-center justify-between">
-                    <h4 class="font-bold">Order #3445</h4>
-                    <a href="" class="flex items-center justify-center text-white bg-slate-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                        Detail
-                    </a>
+        <section class="h-[calc(100vh-8rem)]  overflow-y-auto space-y-5 bg-white rounded-lg py-4 shadow">
+            <div><h3 class="font-bold text-center px-2">Orders</h3></div>
+            <div x-data="{ isOpen: false }" class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
+                <div class="flex py-1 items-center justify-between text-xs font-medium">
+                    <div>
+                        <h5 class="text-gray-500">ORDER PLACED</h5>
+                        <p>Oct 27, 2024</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">TOTAL</h5>
+                        <p>Rp. 500.000</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">SHIP TO</h5>
+                        <p>Jl. Cikeleng Pesantren No. 2</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">ORDER #112322123123</h5>
+                        <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
+                    </div>
                 </div>
-                <table class="rounded-md w-full">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
+                <table x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden w-full">
+                    <thead class="text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr class="text-xs">
                             <th scope="col" class="px-4 py-3">No</th>
                             <th scope="col" class="px-4 py-3">Product</th>
-                            <th scope="col" class="px-4 py-3">Qty</th>
+                            <th scope="col" class="pr-10 py-3 text-right">Qty</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b dark:border-gray-700 text-center bg-white">
+                        <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
                             <td class="px-4 py-3">1</td>  
                             <td class="px-4 py-3">Stilleto</td>  
-                            <td class="px-4 py-3 text-right">4</td>
+                            <td class="pr-10 py-3 text-right">4</td>
                         </tr>
                     </tbody>
                 </table>
-                
             </div>
-            <div class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
-                <div class="flex py-1 items-center justify-between">
-                    <h4 class="font-bold">Order #3446</h4>
-                    <a href="" class="flex items-center justify-center text-white bg-slate-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-                        Detail
-                    </a>
+            <div x-data="{ isOpen: false }" class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
+                <div class="flex py-1 items-center justify-between text-xs font-medium">
+                    <div>
+                        <h5 class="text-gray-500">ORDER PLACED</h5>
+                        <p>Dec 11, 2024</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">TOTAL</h5>
+                        <p>Rp. 1500.000</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">SHIP TO</h5>
+                        <p>Pondok Pinang, Jakarta Selatan</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">ORDER #112322123123</h5>
+                        <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
+                    </div>
                 </div>
-                <table class="rounded-md w-full">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
+                <table x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden w-full">
+                    <thead class="text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr class="text-xs">
                             <th scope="col" class="px-4 py-3">No</th>
                             <th scope="col" class="px-4 py-3">Product</th>
-                            <th scope="col" class="px-4 py-3">Qty</th>
+                            <th scope="col" class="pr-10 py-3 text-right">Qty</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b dark:border-gray-700 text-center bg-white">
+                        <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
                             <td class="px-4 py-3">1</td>  
                             <td class="px-4 py-3">Sneakers</td>  
-                            <td class="px-4 py-3 text-right">10</td>
+                            <td class="pr-10 py-3 text-right">3</td>
+                        </tr>
+                        <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
+                            <td class="px-4 py-3">2</td>  
+                            <td class="px-4 py-3">Flat shoes</td>  
+                            <td class="pr-10 py-3 text-right">2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div x-data="{ isOpen: false }" class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
+                <div class="flex py-1 items-center justify-between text-xs font-medium">
+                    <div>
+                        <h5 class="text-gray-500">ORDER PLACED</h5>
+                        <p>Dec 27, 2024</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">TOTAL</h5>
+                        <p>Rp. 2.500.000</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">SHIP TO</h5>
+                        <p>Jl. Cut Meutia No 42, Bekasi</p>
+                    </div>
+                    <div>
+                        <h5 class="text-gray-500">ORDER #112322123123</h5>
+                        <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
+                    </div>
+                </div>
+                <table x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden w-full">
+                    <thead class="text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr class="text-xs">
+                            <th scope="col" class="px-4 py-3">No</th>
+                            <th scope="col" class="px-4 py-3">Product</th>
+                            <th scope="col" class="pr-10 py-3 text-right">Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
+                            <td class="px-4 py-3">1</td>  
+                            <td class="px-4 py-3">Sneakers</td>  
+                            <td class="pr-10 py-3 text-right">3</td>
                         </tr>
                     </tbody>
                 </table>
