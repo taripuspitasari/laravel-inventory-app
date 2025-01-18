@@ -22,9 +22,8 @@ return new class extends Migration
                 table: 'users',
                 indexName: 'transactions_users_id'
             );
-            $table->decimal('total_amount', total: 10, places: 0);
-            // baru ditambahin
-            $table->decimal('tax', total: 10, places: 0)->nullable();
+            $table->decimal('total_amount', 10, 0);
+            $table->decimal('tax', 10, 0)->nullable();
             $table->string('invoice_number')->unique();
             $table->text('notes')->nullable();
             $table->timestamps();

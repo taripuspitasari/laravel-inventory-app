@@ -17,7 +17,11 @@ return new class extends Migration
                 table: 'users',
                 indexName: 'orders_users_id'
             );
-            $table->decimal('total_amount', total: 10, places: 0);
+            $table->foreignId('address_id')->constrained(
+                table: 'addresses',
+                indexName: 'orders_addresses_id'
+            );
+            $table->decimal('total_amount', 10, 0);
             $table->enum('payment_method', ['bank_transfer', 'qr', 'cod']);
             $table->enum('payment_status', ['pending', 'paid', 'failed']);
             $table->enum('order_status', ['pending', 'processed', 'shipped', 'completed', 'canceled']);

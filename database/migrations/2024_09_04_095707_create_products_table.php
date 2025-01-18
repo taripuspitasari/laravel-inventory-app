@@ -21,10 +21,9 @@ return new class extends Migration
             );
             $table->string('image')->nullable();
             $table->integer('stock');
-            $table->decimal('price', total: 10, places: 0);
-            $table->timestamps();
-            // baru ditambahin
+            $table->decimal('price', 10, 0);
             $table->boolean('isActive')->default(false);
+            $table->timestamps();
         });
     }
 

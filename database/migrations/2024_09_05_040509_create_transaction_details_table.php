@@ -17,13 +17,13 @@ return new class extends Migration
             $table->foreignId('transaction_id')->constrained(
                 table: 'transactions',
                 indexName: 'transactionDetails_transactions_id'
-            );
+            )->cascadeOnDelete();
             $table->foreignId('product_id')->constrained(
                 table: 'products',
                 indexName: 'transactionDetails_products_id'
             );
-            $table->decimal('price', total: 10, places: 0);
-            $table->decimal('subtotal', total: 10, places: 0);
+            $table->decimal('price', 10, 0);
+            $table->decimal('subtotal', 10, 0);
             $table->timestamps();
         });
     }

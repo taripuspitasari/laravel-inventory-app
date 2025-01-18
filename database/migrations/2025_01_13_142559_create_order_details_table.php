@@ -16,14 +16,14 @@ return new class extends Migration
             $table->foreignId('order_id')->constrained(
                 table: 'orders',
                 indexName: 'orderDetails_orders_id'
-            );
+            )->cascadeOnDelete();
             $table->foreignId('product_id')->constrained(
                 table: 'products',
                 indexName: 'orderDetails_products_id'
             );
             $table->integer('quantity');
-            $table->decimal('price', total: 10, places: 0);
-            $table->decimal('subtotal', total: 10, places: 0);
+            $table->decimal('price', 10, 0);
+            $table->decimal('subtotal', 10, 0);
             $table->timestamps();
         });
     }
