@@ -22,6 +22,7 @@ class OrderResource extends JsonResource
             'payment_status' => $this->payment_status,
             'order_status' => $this->order_status,
             'total_amount' => $this->total_amount,
+            'created_at' => $this->created_at->format('M d, Y'),
             'order_details' => OrderDetailResource::collection($this->orderDetails),
         ];
     }

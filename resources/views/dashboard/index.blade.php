@@ -41,7 +41,7 @@
                         </svg>
                     </div>
                     <div class="stat-title">All Orders</div>
-                    <div class="stat-value">3</div>
+                    <div class="stat-value">{{ $totalOrders }}</div>
                 </div>
                 <div class="stat">
                     <div class="stat-figure text-secondary">
@@ -59,22 +59,23 @@
     <div class="xl:w-1/2">
         <section class="h-[calc(100vh-8rem)]  overflow-y-auto space-y-5 bg-white rounded-lg py-4 shadow">
             <div><h3 class="font-bold text-center px-2">Orders</h3></div>
+            @forelse($orders as $order)
             <div x-data="{ isOpen: false }" class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
                 <div class="flex py-1 items-center justify-between text-xs font-medium">
                     <div>
                         <h5 class="text-gray-500">ORDER PLACED</h5>
-                        <p>Oct 27, 2024</p>
+                        <p>{{ $order->created_at->format('M d, Y') }}</p>
                     </div>
                     <div>
                         <h5 class="text-gray-500">TOTAL</h5>
-                        <p>Rp. 500.000</p>
+                        <p>{{ number_format($order->total_amount, 0, ',', '.') }}</p>
                     </div>
                     <div>
                         <h5 class="text-gray-500">SHIP TO</h5>
-                        <p>Jl. Cikeleng Pesantren No. 2</p>
+                        <p>{{ $order->address->address }}</p>
                     </div>
                     <div>
-                        <h5 class="text-gray-500">ORDER #112322123123</h5>
+                        <h5 class="text-gray-500">ORDER #{{ $order->id }}</h5>
                         <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
                     </div>
                 </div>
@@ -87,91 +88,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($order->orderDetails as $item)
                         <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
-                            <td class="px-4 py-3">1</td>  
-                            <td class="px-4 py-3">Stilleto</td>  
-                            <td class="pr-10 py-3 text-right">4</td>
+                            <td class="px-4 py-3">{{ $loop->iteration }}</td>  
+                            <td class="px-4 py-3">{{ $item->product->name }}</td>  
+                            <td class="pr-10 py-3 text-right">{{ $item->quantity }}</td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-            <div x-data="{ isOpen: false }" class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
-                <div class="flex py-1 items-center justify-between text-xs font-medium">
-                    <div>
-                        <h5 class="text-gray-500">ORDER PLACED</h5>
-                        <p>Dec 11, 2024</p>
-                    </div>
-                    <div>
-                        <h5 class="text-gray-500">TOTAL</h5>
-                        <p>Rp. 1500.000</p>
-                    </div>
-                    <div>
-                        <h5 class="text-gray-500">SHIP TO</h5>
-                        <p>Pondok Pinang, Jakarta Selatan</p>
-                    </div>
-                    <div>
-                        <h5 class="text-gray-500">ORDER #112322123123</h5>
-                        <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
-                    </div>
-                </div>
-                <table x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden w-full">
-                    <thead class="text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr class="text-xs">
-                            <th scope="col" class="px-4 py-3">No</th>
-                            <th scope="col" class="px-4 py-3">Product</th>
-                            <th scope="col" class="pr-10 py-3 text-right">Qty</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
-                            <td class="px-4 py-3">1</td>  
-                            <td class="px-4 py-3">Sneakers</td>  
-                            <td class="pr-10 py-3 text-right">3</td>
-                        </tr>
-                        <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
-                            <td class="px-4 py-3">2</td>  
-                            <td class="px-4 py-3">Flat shoes</td>  
-                            <td class="pr-10 py-3 text-right">2</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div x-data="{ isOpen: false }" class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
-                <div class="flex py-1 items-center justify-between text-xs font-medium">
-                    <div>
-                        <h5 class="text-gray-500">ORDER PLACED</h5>
-                        <p>Dec 27, 2024</p>
-                    </div>
-                    <div>
-                        <h5 class="text-gray-500">TOTAL</h5>
-                        <p>Rp. 2.500.000</p>
-                    </div>
-                    <div>
-                        <h5 class="text-gray-500">SHIP TO</h5>
-                        <p>Jl. Cut Meutia No 42, Bekasi</p>
-                    </div>
-                    <div>
-                        <h5 class="text-gray-500">ORDER #112322123123</h5>
-                        <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
-                    </div>
-                </div>
-                <table x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden w-full">
-                    <thead class="text-left text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr class="text-xs">
-                            <th scope="col" class="px-4 py-3">No</th>
-                            <th scope="col" class="px-4 py-3">Product</th>
-                            <th scope="col" class="pr-10 py-3 text-right">Qty</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="text-xs border-b text-left dark:border-gray-700 bg-white">
-                            <td class="px-4 py-3">1</td>  
-                            <td class="px-4 py-3">Sneakers</td>  
-                            <td class="pr-10 py-3 text-right">3</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            @empty
+            <div>empty</div>
+            @endforelse
         </section>
     </div>
 </section>
