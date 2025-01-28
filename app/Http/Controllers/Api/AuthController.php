@@ -29,9 +29,8 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
-        Log::info('Received login credentials:', $credentials);
+
         if (!Auth::attempt($credentials)) {
-            Log::warning('Invalid credentials provided.');
             return response([
                 'message' => 'Provided email address or password is incorrect'
             ], 422);
@@ -39,7 +38,11 @@ class AuthController extends Controller
 
         /** @var \App\Models\User $user */
         $user = Auth::user();
-        Log::info('User authenticated:', ['id' => $user->id]);
+        if ($user->is_admin) {
+            return response([
+                'message' => 'Unauthorized access: Admins cannot log in here.'
+            ], 422);
+        }
         $token = $user->createToken('main')->plainTextToken;
 
         return response(compact('user', 'token'));
