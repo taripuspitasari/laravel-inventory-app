@@ -11,6 +11,19 @@ class Order extends Model
 
     protected $guarded = ['id'];
 
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, function ($query, $search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('id', 'like', '%' . $search . '%');
+            });
+        });
+
+        $query->when($filters['filter'] ?? false, function ($query, $filter) {
+            return $query->where('order_status', $filter);
+        });
+    }
+
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class);

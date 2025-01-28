@@ -72,10 +72,10 @@
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-4 py-3">No.</th>
-                        <th scope="col" class="px-4 py-3">Order ID</th>
+                        <th scope="col" class="px-4 py-3 whitespace-nowrap">Order ID</th>
                         <th scope="col" class="px-4 py-3">Name</th>
                         <th scope="col" class="px-4 py-3">Payment</th>
-                        <th scope="col" class="px-4 py-3 ">Status</th>
+                        <th scope="col" class="px-4 py-3 text-center">Status</th>
                         <th scope="col" class="px-3 py-3 text-right">Total</th>
                         <th scope="col" class="px-4 py-3">
                             <span class="sr-only">Actions</span>
@@ -86,11 +86,11 @@
                     @forelse($orders as $order)
                         <tr class="border-b dark:border-gray-700">
                             <td class="px-4 py-3">{{ $loop->iteration + ($orders->currentPage()-1) * $orders->perPage() }}</td>
-                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a href="/dashboard/orders/{{ $order->id }}">{{ $order->id }}</a></th>
-                            <td class="px-4 py-3">{{ $order->user->name }}</td>
+                            <th scope="row" class="px-4 py-3"><a href="/dashboard/orders/{{ $order->id }}">{{ $order->id }}</a></th>
+                            <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{{ $order->user->name }}</td>
                             <td class="px-4 py-3 uppercase">{{ $order->payment_method }}</td>
-                            <td class="px-4 py-3">{{ $order->payment_status }}</td>
-                            <td class="px-4 py-3 text-right">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
+                            <td class="px-4 py-3"><p class="capitalize {{ $order->payment_status === "paid" ? 'bg-lime-100 text-lime-800' : 'bg-rose-100 text-rose-800' }} px-2 rounded-md text-center">{{ $order->payment_status }}</p></td>
+                            <td class="px-4 py-3 text-right whitespace-nowrap">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
                             <td class="px-4 py-3 flex items-center justify-center" x-data="{open:false}">
                                 <button x-on:click="open = true" x-on:mouseleave="open = false" class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100" type="button">
                                     <svg class="w-5 h-5" aria-hidden="true" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

@@ -58,7 +58,7 @@
                         <tr class="border-b dark:border-gray-700">
                             <td class="px-4 py-3">{{ $loop->iteration + ($products->currentPage()-1) * $products->perPage() }}</td>
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a href="/dashboard/products/{{ $product->id }}">{{ $product->name }}</a></th>
-                            <td class="px-4 py-3">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                             <td class="px-4 py-3">{{ $product->stock }}</td>
                             <td class="px-4 py-3">{{ $product->category->name }}</td>
                             <td class="px-4 py-3 text-center">

@@ -87,7 +87,7 @@
                         <tr class="border-b dark:border-gray-700">
                             <td class="px-4 py-3">{{ $loop->iteration + ($partners->currentPage()-1) * $partners->perPage() }}</td>
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a href="/dashboard/partners/{{ $partner->id }}">{{ $partner->name }}</a></th>
-                            <td class="px-4 py-3">{{ Str::limit($partner->address, 70) }}</td>
+                            <td class="px-4 py-3 whitespace-nowrap">{{ Str::limit($partner->address, 70) }}</td>
                             <td class="px-4 py-3">{{ $partner->email }}</td>
                             <td class="px-4 py-3">{{ $partner->phone }}</td>
                             <td class="px-4 py-3">
