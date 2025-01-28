@@ -38,7 +38,7 @@ class WishlistController extends Controller
     public function destroy(Request $request, $id)
     {
         $user = $request->user();
-        $wishlistItem = Wishlist::where('id', $id)->where('user_id', $user->id)
+        $wishlistItem = Wishlist::where('product_id', $id)->where('user_id', $user->id)
             ->first();
 
         $wishlistItem->delete();

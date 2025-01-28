@@ -58,6 +58,14 @@
                             </svg> Transactions
                         </a>
                     </li>
+                    <li class="p-1">
+                        <a href="/dashboard/orders" class="{{ Request::is('dashboard/orders*') ? 'bg-primary-700 text-white' : 'bg-white text-gray-800' }} flex gap-2 p-2 rounded-lg hover:bg-primary-700 hover:text-white">
+                            <svg class="size-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12.013 6.175 7.006 9.369l5.007 3.194-5.007 3.193L2 12.545l5.006-3.193L2 6.175l5.006-3.194 5.007 3.194ZM6.981 17.806l5.006-3.193 5.006 3.193L11.987 21l-5.006-3.194Z"/>
+                                <path d="m12.013 12.545 5.006-3.194-5.006-3.176 4.98-3.194L22 6.175l-5.007 3.194L22 12.562l-5.007 3.194-4.98-3.211Z"/>
+                            </svg> Orders
+                        </a>
+                    </li>
                 </ul>
                 <ul x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden md:hidden">
                     <li @click="isOpen = !isOpen"  class="p-4 flex justify-end cursor-pointer">
@@ -93,6 +101,11 @@
                         </a>
                     </li>
                     <li class="p-4">
+                        <a href="/dashboard/orders" class="size-6 {{ Request::is('dashboard/orders*') ? 'text-primary-700' : 'text-gray-800' }} hover:text-primary-700">
+                            Orders
+                        </a>
+                    </li>
+                    <li class="p-4">
                         <form action="/logout" method="post">
                             @csrf
                             <button type="submit">
@@ -116,7 +129,7 @@
         <!-- Main content -->
         <div class="py-2 px-5 md:flex-1">
             <div class="h-14 min-w-full mb-2 flex justify-between items-center">
-                <div class="text-center font-semibold">
+                <div class="text-center text-xl font-semibold">
                     <p>{{ $title }}</p>
                 </div>
                 <div class="hidden md:block text-right text-sm font-semibold">
