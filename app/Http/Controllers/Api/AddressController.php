@@ -84,8 +84,8 @@ class AddressController extends Controller
     {
         $user = $request->user();
 
-        $addres = Address::findOrFail($id);
-        $addres->delete();
+        $address = Address::findOrFail($id);
+        $address->delete();
 
         $addresses = Address::where('user_id', $user->id)->get();
 

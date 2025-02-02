@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\WishlistController;
-use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +14,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::patch('/user/{id}/profile', [AuthController::class, 'updateProfile']);
+    Route::patch('/user/{id}/profile-picture', [AuthController::class, 'updateProfilePicture']);
+    Route::patch('/change-password', [AuthController::class, 'changePassword']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('cart', CartController::class);
     Route::delete('cart/{cart}/items/{item}', [CartController::class, 'destroyItem']);

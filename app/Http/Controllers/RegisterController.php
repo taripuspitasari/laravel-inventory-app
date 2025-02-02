@@ -20,7 +20,6 @@ class RegisterController extends Controller
             'password' => ['required', 'min:7', 'max:255']
         ]);
 
-        // User::create($validatedData);
         User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
