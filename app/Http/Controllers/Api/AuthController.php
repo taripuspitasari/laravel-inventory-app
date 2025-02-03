@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SignupRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,10 @@ class AuthController extends Controller
         ]);
         $token = $user->createToken('main')->plainTextToken;
 
-        return response(compact('user', 'token'));
+        return response()->json([
+            'user' => new UserResource($user),
+            'token' => $token,
+        ]);
     }
 
     public function login(LoginRequest $request)
@@ -48,7 +52,11 @@ class AuthController extends Controller
         }
         $token = $user->createToken('main')->plainTextToken;
 
-        return response(compact('user', 'token'));
+        // return response(compact('user', 'token'));
+        return response()->json([
+            'user' => new UserResource($user),
+            'token' => $token,
+        ]);
     }
 
     public function logout(Request $request)
@@ -82,28 +90,29 @@ class AuthController extends Controller
         $user->email = $validatedData['email'];
         $user->save();
 
-        return response()->json(['user' => $user, 'message' => 'Personal information has changed']);
+        return response()->json(['user' => new UserResource($user), 'message' => 'Personal information has changed']);
     }
 
-    public function updateProfilePicture(Request $request, $id)
+    public function updateProfilePicture(Request $request)
     {
-        $validatedPicture = $request->validate([
-            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+        $request->validate([
+            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048']
         ]);
 
         /** @var \App\Models\User $user */
-        $user = User::find($id);
+        $user = $request->user();
 
-        if ($validatedPicture) {
-            if ($user->image) {
-                Storage::delete($user->image);
-            }
-            $imagePath = $request->file('image')->store('profile-images', 'public');
-
-            $user->image = $imagePath;
-            $user->save();
+        if ($user->image) {
+            Storage::delete($user->image);
         }
 
-        return response()->json($user);
+        $path = $request->file('photo')->store('profile-images');
+
+        $user->update(['image' => $path]);
+
+        return response()->json([
+            'user' => new UserResource($user),
+            'message' => 'Photo profile updated successfully'
+        ]);
     }
 }

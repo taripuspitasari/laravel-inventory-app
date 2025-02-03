@@ -15,7 +15,7 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::patch('/user/{id}/profile', [AuthController::class, 'updateProfile']);
-    Route::patch('/user/{id}/profile-picture', [AuthController::class, 'updateProfilePicture']);
+    Route::post('/user/profile-picture', [AuthController::class, 'updateProfilePicture']);
     Route::patch('/change-password', [AuthController::class, 'changePassword']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('cart', CartController::class);
