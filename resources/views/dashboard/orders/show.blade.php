@@ -40,9 +40,9 @@
     </div>
     {{-- side --}}
     <div class="md:w-1/3 bg-white shadow-md rounded-md p-4 space-y-2">
-        <h4 class="font-bold">Customer</h4>
         <div class="border-b pb-1">
-            <h5>{{ $order->user->name }}</h5>
+            <h5 class="font-bold">Customer</h5>
+            <p>{{ $order->user->name }}</p>
         </div>
         <div class="border-b pb-1">
             <h5 class="font-bold">Contact Info</h5>
