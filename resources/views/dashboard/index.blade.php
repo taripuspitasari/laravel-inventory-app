@@ -1,19 +1,19 @@
 @extends('dashboard.layouts.sidebar')
 @section('container')
-<section class="flex flex-col md:flex-row gap-4">
-    <div class="xl:w-1/2 ">
-        <div class="h-[calc(100vh-8rem)] flex flex-col justify-between">
+<section class="flex flex-col lg:flex-row gap-4">
+    <div class="lg:w-1/2 ">
+        <div class="lg:h-[calc(100vh-8rem)] flex flex-col justify-between">
             <section class="p-4 bg-white flex justify-evenly items-center rounded-lg mb-4 shadow">
                 <div>
-                    <h3 class="text-xl md:text-3xl">Hi, {{ explode(' ',auth()->user()->name)[0] }}</h3>
+                    <h3 class="text-xl lg:text-3xl">Hi, {{ explode(' ',auth()->user()->name)[0] }}</h3>
                     <p class="text-sm text-slate-400">Have a nice day!</p>
                 </div>
                 <div>
-                    <img src="{{ asset('images/blue-dashboard.png') }}" alt="" class="h-36 md:h-52">
+                    <img src="{{ asset('images/blue-dashboard.png') }}" alt="" class="h-36 lg:h-52">
                 </div>
             </section>
             <section class="flex flex-col justify-evenly items-center shadow p-1 bg-white rounded-lg">
-                <div class="stats flex flex-col md:flex-row w-full rounded-none">
+                <div class="stats flex flex-col lg:flex-row w-full rounded-none">
                     <div class="stat">
                         <div class="stat-figure text-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block text-primary-700 h-8 w-8 stroke-current">
@@ -34,7 +34,7 @@
                         <div class="stat-value">{{ $totalStock }}</div>
                     </div>
                 </div>
-                <div class="stats flex flex-col md:flex-row w-full rounded-none">
+                <div class="stats flex flex-col lg:flex-row w-full rounded-none">
                     <div class="stat">
                         <div class="stat-figure text-secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="text-primary-700 inline-block h-8 w-8 stroke-current">
@@ -58,25 +58,25 @@
             </section>
         </div>
     </div>
-    <div class="xl:w-1/2">
+    <div class="lg:w-1/2">
         <section class="  h-[calc(100vh-8rem)] overflow-y-auto space-y-5 bg-white rounded-lg py-4 shadow">
             <div><h3 class="font-bold text-center px-2">Pending orders</h3></div>
             @forelse($orders as $order)
             <div x-data="{ isOpen: false }" class="p-2 m-2 shadow-lg rounded-md bg-slate-200 dark:bg-gray-800 relative sm:rounded-lg overflow-x-hidden my-4">
-                <div class="flex py-1 items-center justify-between text-xs font-medium">
-                    <div>
+                <div class="flex md:flex-row flex-col py-1 md:items-center md:justify-between text-xs font-medium">
+                    <div class="flex md:flex-col flex-row justify-between">
                         <h5 class="text-gray-500">ORDER PLACED</h5>
                         <p>{{ $order->created_at->format('M d, Y') }}</p>
                     </div>
-                    <div>
+                    <div class="flex md:flex-col flex-row justify-between">
                         <h5 class="text-gray-500">TOTAL</h5>
                         <p>{{ number_format($order->total_amount, 0, ',', '.') }}</p>
                     </div>
-                    <div>
+                    <div class="flex md:flex-col flex-row justify-between">
                         <h5 class="text-gray-500">SHIP TO</h5>
                         <p>{{ $order->address->address }}</p>
                     </div>
-                    <div>
+                    <div class="flex md:flex-col flex-row justify-between">
                         <h5 class="text-gray-500">ORDER #{{ $order->id }}</h5>
                         <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
                     </div>

@@ -1,6 +1,6 @@
 @extends('dashboard.layouts.sidebar')
 @section('container')
-<form class="md:w-1/2" action="/dashboard/products/{{ $product->id }}" method="post" enctype="multipart/form-data">
+<form class="lg:w-1/2" action="/dashboard/products/{{ $product->id }}" method="post" enctype="multipart/form-data">
     @method('put')
     @csrf
     <div class="space-y-2">

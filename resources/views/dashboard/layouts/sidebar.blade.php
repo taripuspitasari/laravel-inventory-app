@@ -12,11 +12,11 @@
     </style>
 </head>
 <body>
-    <div x-data="{ isOpen: false }" class="relative md:flex min-h-screen  bg-slate-200">
+    <div x-data="{ isOpen: false }" class="relative lg:flex min-h-screen  bg-slate-200">
         <!-- Sidebar -->
-        <div class="absolute z-10 right-0 top-0 md:static w-32 md:w-40 md:flex flex-col md:justify-between bg-white md:py-2 shadow-md rounded-r-lg">
+        <div class="absolute z-10 right-0 top-0 lg:static w-32 lg:w-40 lg:flex flex-col lg:justify-between bg-white lg:py-2 shadow-md rounded-r-lg">
             <div>
-                <ul class="hidden md:block">
+                <ul class="hidden lg:block">
                     <li class="p-4">
                         <div class="font-semibold">
                             <p class="text-primary-700 text-lg">StockMate</p>
@@ -67,7 +67,7 @@
                         </a>
                     </li>
                 </ul>
-                <ul x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden md:hidden">
+                <ul x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden lg:hidden">
                     <li @click="isOpen = !isOpen"  class="p-4 flex justify-end cursor-pointer">
                         <div>
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -115,7 +115,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="p-1 hidden md:block">
+            <div class="p-1 hidden lg:block">
                 <form action="/logout" method="post">
                     @csrf
                     <button type="submit" class="flex gap-2 p-2 hover:bg-primary-700 hover:text-white rounded-lg w-full">
@@ -127,15 +127,15 @@
             </div>
         </div>
         <!-- Main content -->
-        <div class="py-2 px-5 md:flex-1">
+        <div class="py-2 px-5 lg:flex-1">
             <div class="h-14 min-w-full mb-2 flex justify-between items-center">
                 <div class="text-center text-xl font-semibold">
                     <p>{{ $title }}</p>
                 </div>
-                <div class="hidden md:block text-right text-sm font-semibold">
+                <div class="hidden lg:block text-right text-sm font-semibold">
                     <p>{{ auth()->user()->name }}</p>
                 </div>
-                <div @click="isOpen = !isOpen"  class="md:hidden">
+                <div @click="isOpen = !isOpen"  class="lg:hidden">
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
                     </svg>

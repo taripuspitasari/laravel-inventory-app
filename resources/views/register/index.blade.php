@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('container')
-<div class="p-6 space-y-4 mx-auto md:w-1/2 md:space-y-6 sm:p-8">
+<div class="p-6 space-y-4 mx-auto lg:w-1/2 md:space-y-6 sm:p-8">
     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
         Registration
     </h1>
