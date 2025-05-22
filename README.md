@@ -8,7 +8,7 @@ Laravel, Blade, and styled using Tailwind CSS, Alpine.js, and Flowbite.
 
 ## Getting Started
 
--   git clone https://github.com/taripuspitasari/stockmate.git
+-   git clone https://github.com/taripuspitasari/inventory-app.git
 -   cd stockmate
 -   composer install
 -   npm install

@@ -9,8 +9,8 @@ use App\Services\CategoryService;
 
 class DashboardProductController extends Controller
 {
-    protected $productService;
-    protected $categoryService;
+    private $productService;
+    private $categoryService;
 
     public function __construct(ProductService $productService, CategoryService $categoryService)
     {

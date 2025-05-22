@@ -29,7 +29,7 @@
                     <p class="font-normal text-gray-500">Record and monitor sales or purchases.</p>
                 </li>
                 <li class="border border-slate-200 shadow-md py-2 px-6  rounded-md hover:scale-110 transform transition duration-150 ease-in-out">
-                    <h4 class="font-bold mb-2">eCommerce Integration (coming soon) </h4>
+                    <h4 class="font-bold mb-2">eCommerce Integration </h4>
                     <p class="font-normal text-gray-500">Build a connected online store with an API.</p>
                 </li>
             </ul>

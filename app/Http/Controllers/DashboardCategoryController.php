@@ -8,7 +8,7 @@ use App\Services\CategoryService;
 
 class DashboardCategoryController extends Controller
 {
-    protected $categoryService;
+    private $categoryService;
 
     public function __construct(CategoryService $categoryService)
     {
@@ -20,9 +20,11 @@ class DashboardCategoryController extends Controller
      */
     public function index()
     {
-        return view('dashboard.categories.index', [
+        $categories = $this->categoryService->getAllCategories();
+
+        return response()->view('dashboard.categories.index', [
             'title' => 'Categories',
-            'categories' => $this->categoryService->getAllCategories()
+            'categories' => $categories
         ]);
     }
 
@@ -31,7 +33,7 @@ class DashboardCategoryController extends Controller
      */
     public function create()
     {
-        return view('dashboard.categories.create', [
+        return response()->view('dashboard.categories.create', [
             'title' => 'Create New Category'
         ]);
     }
@@ -55,10 +57,12 @@ class DashboardCategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('dashboard.categories.show', [
+        $products = $this->categoryService->getCategoryWithProducts($category);
+
+        return response()->view('dashboard.categories.show', [
             'category' => $category,
             'title' => 'Category Detail',
-            'products' => $this->categoryService->getCategoryWithProducts($category)
+            'products' => $products
         ]);
     }
 

@@ -70,5 +70,8 @@
         </div> 
         @endforelse
     </div>
+    <div class="pb-5">
+    {{ $products->links() }}
+    </div>
 </div>
 @endsection

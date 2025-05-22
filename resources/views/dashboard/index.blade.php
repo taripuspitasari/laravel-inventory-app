@@ -78,7 +78,7 @@
                     </div>
                     <div class="flex md:flex-col flex-row justify-between">
                         <h5 class="text-gray-500">ORDER #{{ $order->id }}</h5>
-                        <button @click="isOpen = !isOpen" class="cursor-pointer hover:underline">Order Details</button>
+                        <button @click="isOpen = !isOpen" class="p-1 bg-primary-600 rounded-md text-white cursor-pointer hover:bg-primary-700">Details</button>
                     </div>
                 </div>
                 <table x-bind:class="{'hidden': !isOpen, '': isOpen}" class="hidden w-full">
