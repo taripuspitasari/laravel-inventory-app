@@ -36,7 +36,7 @@
                         <td class="px-4 py-3">{{ $loop->iteration + ($transactions->currentPage()-1) * $transactions->perPage() }}</td>     
                         <td scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"><a href="/dashboard/transactions/{{ $transaction->id }}">{{ $transaction->invoice_number }}</a></td>                                                    
                         <td scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ $transaction->transaction_type == 'in' ? 'Purchase' : 'Sale' }}</td>                         
-                        <td class="px-4 py-3">Rp. {{ number_format($transaction->totalAmount, 0, ',', '.') }}</td>
+                        <td class="px-4 py-3">Rp. {{ number_format($transaction->total_amount, 0, ',', '.') }}</td>
                         <td class="px-4 py-3">{{ $transaction->created_at->format('Y-m-d') }}</td>
                     </tr>
                     @empty

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -42,23 +43,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function transactions()
+    public function transactions(): HasMany
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class, "user_id", "id");
     }
 
-    public function addresses()
+    public function addresses(): HasMany
     {
-        return $this->hasMany(Address::class);
+        return $this->hasMany(Address::class, "user_id", "id");
     }
 
-    public function orders()
+    public function orders(): HasMany
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class, "user_id", "id");
     }
 
-    public function wishlists()
+    public function wishlists(): HasMany
     {
-        return $this->hasMany(Wishlist::class);
+        return $this->hasMany(Wishlist::class, "user_id", "id");
     }
 }

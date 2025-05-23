@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Order extends Model
 {
@@ -24,25 +27,19 @@ class Order extends Model
         });
     }
 
-    public function orderDetails()
+    public function orderDetails(): HasMany
     {
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class, "order_id", "id");
     }
 
-    public function products()
+
+    public function user(): BelongsTo
     {
-        return $this->belongsToMany(Product::class, 'order_details')
-            ->withPivot('quantity', 'price')
-            ->withTimestamps();
+        return $this->belongsTo(User::class, "user_id", "id");
     }
 
-    public function user()
+    public function address(): BelongsTo
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function address()
-    {
-        return $this->belongsTo(Address::class);
+        return $this->belongsTo(Address::class, "address_id", "id");
     }
 }
