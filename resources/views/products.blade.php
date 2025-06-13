@@ -54,7 +54,7 @@
                 </ul>
                 {{ $product->description }}
                 <div class="mt-4 flex items-center justify-between gap-4">
-                    <p class="text-2xl font-extrabold leading-tight text-gray-900 dark:text-white">Stock: <span>{{ $product->stock }}</span></p>
+                    <p class="text-lg font-extrabold leading-tight text-gray-900 dark:text-white">Stock: <span>{{ $product->stock }}</span></p>
                     <div class="{{ $product->isActive ? 'bg-lime-100' : 'bg-rose-100' }}  px-2 rounded-md">
                         <p >
                             {{ $product->isActive ? 'Active' : 'Out of stock' }}

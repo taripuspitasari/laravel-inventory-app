@@ -8,7 +8,7 @@ use App\Services\PartnerService;
 
 class DashboardPartnerController extends Controller
 {
-    protected $partnerService;
+    private $partnerService;
 
     public function __construct(PartnerService $partnerService)
     {

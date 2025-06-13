@@ -8,7 +8,7 @@ use App\Services\TransactionService;
 
 class DashboardTransactionController extends Controller
 {
-    protected $transactionService;
+    private $transactionService;
 
     public function __construct(TransactionService $transactionService)
     {

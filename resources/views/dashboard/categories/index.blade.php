@@ -36,7 +36,7 @@
     </div>
     @endif
     
-    <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-x-hidden my-4">
+    <div class="bg-white dark:bg-gray-800 relative shadow-md my-4">
         {{-- the div was overflow-x-auto --}}
             <div>
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -62,7 +62,7 @@
                                         <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                     </svg>
                                 </button>
-                                <div x-show="open" x-on:mouseenter="open = true" x-on:mouseleave="open = false" class="absolute z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" x-cloak>
+                                <div x-show="open" x-on:mouseenter="open = true" x-on:mouseleave="open = false" class="absolute z-10 right-0 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" x-cloak>
                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                                         <li>
                                             <a href="/dashboard/categories/{{ $category->id }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>

@@ -16,9 +16,9 @@ class CategoryService
         return Category::create($data);
     }
 
-    public function getCategoryWithProducts($category, $perPage = 5)
+    public function getCategoryWithProducts($category)
     {
-        return $category->products()->paginate($perPage);
+        return $category->products()->simplePaginate(7);
     }
 
     public function updateCategory($category, $data)

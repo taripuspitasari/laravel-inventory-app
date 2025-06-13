@@ -11,7 +11,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['orderDetails', 'address'])->get();
+        $orders = Order::with(['orderDetails', 'address'])->where('order_status', '!=', 'completed')->get();
         return view('dashboard.index', [
             "title" => "Home",
             "totalProducts" => Product::count(),

@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
-use App\Services\CategoryService;
 
 class DashboardProductController extends Controller
 {
     private $productService;
-    private $categoryService;
 
-    public function __construct(ProductService $productService, CategoryService $categoryService)
+    public function __construct(ProductService $productService)
     {
         $this->productService = $productService;
-        $this->categoryService = $categoryService;
     }
     /**
      * Display a listing of the resource.
@@ -33,9 +31,10 @@ class DashboardProductController extends Controller
      */
     public function create()
     {
+        $categories = Category::all();
         return view('dashboard.products.create', [
             'title' => 'Create New Product',
-            'categories' => $this->categoryService->getAllCategories()
+            'categories' => $categories
         ]);
     }
 
@@ -76,9 +75,10 @@ class DashboardProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $categories = Category::all();
         return view('dashboard.products.edit', [
             'product' => $product,
-            'categories' => $this->categoryService->getAllCategories(),
+            'categories' => $categories,
             'title' => 'Edit Product'
         ]);
     }

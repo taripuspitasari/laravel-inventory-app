@@ -42,7 +42,7 @@
 
     <div>
         <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Address</label>
-        <textarea id="address" name="address" id="address" rows="4" class="{{ $errors->has('address') ? 'border-red-500' : 'border-gray-300' }} bg-gray-50 border text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Jl. Cikeleng Pesantren No. 2" required>{{ old('address') }}</textarea>
+        <textarea id="address" name="address" id="address" rows="3" class="{{ $errors->has('address') ? 'border-red-500' : 'border-gray-300' }} bg-gray-50 border text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  placeholder="Jl. Cikeleng Pesantren No. 2" required>{{ old('address') }}</textarea>
         @error('address')
         <div class="mt-2 text-sm text-red-600">{{ $message }}</div>
         @enderror

@@ -1,8 +1,8 @@
 @extends('dashboard.layouts.sidebar')
 @section('container')
-<section class="flex flex-col md:flex-row gap-2">
+<section class="flex flex-col md:flex-row gap-4">
     {{-- main --}}
-    <div class="md:w-2/3 space-y-2">
+    <div class="md:w-2/3 flex flex-col gap-4 justify-between">
         <div class="bg-white p-4 shadow-md rounded-md flex justify-between">
             <h4 class="font-bold">Order #{{ $order->id }}</h4>
             <ul class="flex gap-2">

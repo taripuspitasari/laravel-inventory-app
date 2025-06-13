@@ -66,14 +66,14 @@
     </div>
     @endif
 
-    <div class="bg-white relative dark:bg-gray-800 shadow-md sm:rounded-lg overflow-x-hidden my-4">
+    <div class="bg-white relative dark:bg-gray-800 shadow-md my-4">
         <div class="overflow-x-auto">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-4 py-3">No.</th>
                         <th scope="col" class="px-4 py-3 whitespace-nowrap">Order ID</th>
-                        <th scope="col" class="px-4 py-3">Name</th>
+                        <th scope="col" class="px-4 py-3">Customer</th>
                         <th scope="col" class="px-4 py-3">Payment</th>
                         <th scope="col" class="px-4 py-3 text-center">Status</th>
                         <th scope="col" class="px-3 py-3 text-right">Total</th>
@@ -97,7 +97,7 @@
                                         <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
                                     </svg>
                                 </button>
-                                <div x-show="open" x-on:mouseenter="open = true" x-on:mouseleave="open = false" class="absolute right-0 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" x-cloak>
+                                <div x-show="open" x-on:mouseenter="open = true" x-on:mouseleave="open = false" class="absolute z-50 right-0 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" x-cloak>
                                     <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                                         <li>
                                             <a href="/dashboard/orders/{{ $order->id }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Show</a>
