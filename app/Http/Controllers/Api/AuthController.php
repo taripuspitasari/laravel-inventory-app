@@ -19,12 +19,14 @@ class AuthController extends Controller
     public function signup(SignupRequest $request)
     {
         $data = $request->validated();
-        /** @var \App\Models\User $user */
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => $data['password']
+            'password' => $data['password'],
+            'role' => 'member'
         ]);
+
         $token = $user->createToken('main')->plainTextToken;
 
         return response()->json([
@@ -35,24 +37,22 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $credentials = $request->validated();
+        $data = $request->validated();
+        $user = User::where('email', $data['email'])->first();
 
-        if (!Auth::attempt($credentials)) {
-            return response([
-                'message' => 'Provided email address or password is incorrect'
+        if (!$user || !Hash::check($data['password'], $user->password)) {
+            return response()->json([
+                "message" => "Provided email address or password is incorrect"
             ], 422);
         }
 
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        if ($user->is_admin) {
+        if ($user->role !== "member") {
             return response([
-                'message' => 'Unauthorized access: Admins cannot log in here.'
+                'message' => 'Unauthorized access: you are not a member.'
             ], 422);
         }
         $token = $user->createToken('main')->plainTextToken;
 
-        // return response(compact('user', 'token'));
         return response()->json([
             'user' => new UserResource($user),
             'token' => $token,
@@ -61,9 +61,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        /** @var \App\Models\User $user */
-        $user = $request->user();
-        $user->currentAccessToken()->delete();
+        $request->user()->currentAccessToken()->delete();
         return response('', 204);
     }
 
