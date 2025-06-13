@@ -43,6 +43,11 @@ class Transaction extends Model
         return $this->belongsTo(Partner::class, "partner_id", "id");
     }
 
+    public function supplier(): BelongsTo
+    {
+        return $this->belongsTo(Supplier::class, "supplier_id", "id");
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, "user_id", "id");

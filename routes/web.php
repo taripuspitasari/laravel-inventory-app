@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardOrderController;
 use App\Http\Controllers\DashboardPartnerController;
 use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\DashboardCategoryController;
+use App\Http\Controllers\DashboardSupplierController;
 use App\Http\Controllers\DashboardTransactionController;
 
 Route::get('/', function () {
@@ -41,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/dashboard/products', DashboardProductController::class);
     Route::resource('/dashboard/categories', DashboardCategoryController::class);
     Route::resource('/dashboard/partners', DashboardPartnerController::class);
+    Route::resource('/dashboard/suppliers', DashboardSupplierController::class);
 
     Route::controller(DashboardTransactionController::class)->group(function () {
         Route::get('/dashboard/transactions', 'index');
