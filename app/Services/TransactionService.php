@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Partner;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Supplier;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,8 @@ class TransactionService
             "button" => $type === "purchase" ? "Create Purchase" : "Create Sale",
             "categories" => Category::all(),
             "products" => Product::all(),
-            "partners" => $type === "purchase" ? Partner::supplier()->get() : Partner::customer()->get()
+            "partners" => $type === "purchase" ? Partner::supplier()->get() : Partner::customer()->get(),
+            "suppliers" => Supplier::all()
         ];
     }
 
