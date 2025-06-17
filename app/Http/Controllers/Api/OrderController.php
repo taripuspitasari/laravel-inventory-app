@@ -21,7 +21,6 @@ class OrderController extends Controller
         return OrderResource::collection($orders);
     }
 
-
     public function store(StoreOrderRequest $request)
     {
         $data = $request->validated();
