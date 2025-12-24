@@ -11,7 +11,6 @@ use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\DashboardCategoryController;
 use App\Http\Controllers\DashboardPurchaseController;
 use App\Http\Controllers\DashboardSupplierController;
-use App\Http\Controllers\DashboardTransactionController;
 
 Route::get('/', function () {
     return view('index');
@@ -44,13 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('/dashboard/categories', DashboardCategoryController::class);
     Route::resource('/dashboard/partners', DashboardPartnerController::class);
     Route::resource('/dashboard/suppliers', DashboardSupplierController::class);
-
-    Route::controller(DashboardTransactionController::class)->group(function () {
-        Route::get('/dashboard/transactions', 'index');
-        Route::get('/dashboard/transactions/create', 'create');
-        Route::get('/dashboard/transactions/{transaction}', 'show');
-        Route::post('/dashboard/transactions', 'store');
-    });
 
     Route::controller(DashboardPurchaseController::class)->group(function () {
         Route::get('/dashboard/purchases', 'index');
