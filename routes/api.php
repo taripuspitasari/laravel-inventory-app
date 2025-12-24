@@ -25,9 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/orders', [OrderController::class, 'store']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
     Route::get('/wishlists', [WishlistController::class, 'index']);
-    Route::get('/wishlists/{id}', [WishlistController::class, 'show']);
-    Route::post('/wishlists', [WishlistController::class, 'store']);
-    Route::delete('/wishlists/{item}', [WishlistController::class, 'destroy']);
+    Route::post('/wishlists', [WishlistController::class, 'toggle']);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);

@@ -5,19 +5,21 @@ namespace App\Http\Controllers\Api;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\WishlistResource;
+
 
 class WishlistController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
-        $wishlistItems = $user->wishlists;
-
-        return WishlistResource::collection($wishlistItems);
+        return response()->json([
+            'data' => $request->user()
+                ->wishlists()
+                ->pluck('product_id')
+                ->values()
+        ]);
     }
 
-    public function store(Request $request)
+    public function toggle(Request $request)
     {
         $user = $request->user();
 
@@ -25,26 +27,26 @@ class WishlistController extends Controller
             'product_id' => ['required', 'exists:products,id']
         ]);
 
-        Wishlist::create([
-            'product_id' => $data['product_id'],
-            'user_id' => $user->id
-        ]);
-
-        $wishlistItems = $user->wishlists;
-
-        return WishlistResource::collection($wishlistItems);
-    }
-
-    public function destroy(Request $request, $id)
-    {
-        $user = $request->user();
-        $wishlistItem = Wishlist::where('product_id', $id)->where('user_id', $user->id)
+        $wishlist = Wishlist::where('user_id', $user->id)
+            ->where('product_id', $data['product_id'])
             ->first();
 
-        $wishlistItem->delete();
+        if ($wishlist) {
+            $wishlist->delete();
+            return response()->json([
+                'data' => $data['product_id'],
+                'message' => 'removed'
+            ]);
+        }
 
-        $wishlistItems = $user->wishlists;
+        Wishlist::create([
+            'user_id' => $user->id,
+            'product_id' => $data['product_id']
+        ]);
 
-        return WishlistResource::collection($wishlistItems);
+        return response()->json([
+            'data' => $data['product_id'],
+            'message' => 'added'
+        ]);
     }
 }

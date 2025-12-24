@@ -30,8 +30,11 @@ class AuthController extends Controller
         $token = $user->createToken('main')->plainTextToken;
 
         return response()->json([
-            'user' => new UserResource($user),
-            'token' => $token,
+            'data' => [
+                'user' => new UserResource($user),
+                'token' => $token,
+            ],
+            'message' => 'Registration successful, login now!'
         ]);
     }
 
@@ -42,27 +45,32 @@ class AuthController extends Controller
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response()->json([
-                "message" => "Provided email address or password is incorrect"
-            ], 422);
+                "message" => "Incorrect email or password"
+            ], 401);
         }
 
         if ($user->role !== "member") {
             return response([
                 'message' => 'Unauthorized access: you are not a member.'
-            ], 422);
+            ], 403);
         }
         $token = $user->createToken('main')->plainTextToken;
 
         return response()->json([
-            'user' => new UserResource($user),
-            'token' => $token,
+            'data' => [
+                'user' => new UserResource($user),
+                'token' => $token,
+            ],
+            'message' => 'Login succesfully'
         ]);
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
-        return response('', 204);
+        return response()->json([
+            'message' => 'Logged out successfully'
+        ]);
     }
 
     public function changePassword(ChangePasswordRequest $request)
@@ -72,7 +80,9 @@ class AuthController extends Controller
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return response()->json(['message' => 'Password has changed']);
+        return response()->json([
+            'message' => 'Password has changed'
+        ]);
     }
 
     public function updateProfile(Request $request, $id)
@@ -88,7 +98,10 @@ class AuthController extends Controller
         $user->email = $validatedData['email'];
         $user->save();
 
-        return response()->json(['user' => new UserResource($user), 'message' => 'Personal information has changed']);
+        return response()->json([
+            'data' =>  new UserResource($user),
+            'message' => 'Personal information has changed'
+        ]);
     }
 
     public function updateProfilePicture(Request $request)
@@ -109,7 +122,7 @@ class AuthController extends Controller
         $user->update(['image' => $path]);
 
         return response()->json([
-            'user' => new UserResource($user),
+            'data' => new UserResource($user),
             'message' => 'Photo profile updated successfully'
         ]);
     }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 use App\Http\Resources\CartCollection;
+use App\Http\Resources\CartResource;
 
 class CartController extends Controller
 {
@@ -18,12 +19,19 @@ class CartController extends Controller
     {
         $user = $request->user();
         $carts = Cart::where('user_id', $user->id)->with('product')->get();
-
-        if (!$carts) {
-            return response()->json(['message' => 'Cart is empty'], 200);
-        }
-
         return new CartCollection($carts);
+    }
+
+    private function cartResponse(Cart $cart)
+    {
+        $carts = Cart::where('user_id', auth()->id())->get();
+        $total_quantity = $carts->sum('quantity');
+        $total_amount  = $carts->sum(fn($item) => $item->quantity * $item->product->price);
+        return response()->json([
+            "data" => new CartResource($cart),
+            "total_quantity" => $total_quantity,
+            "total_amount" => $total_amount,
+        ]);
     }
 
     /**
@@ -34,18 +42,13 @@ class CartController extends Controller
     {
         $data = $request->validated();
         $user = $request->user();
-
         $cart = Cart::firstOrCreate(
             ['product_id' => $data['product_id'], 'user_id' => $user->id],
             ['quantity' => 0]
         );
-
         $cart->quantity += $data['quantity'];
         $cart->save();
-
-        $carts = Cart::where('user_id', $user->id)->with('product')->get();
-
-        return response(new CartCollection($carts), 201);
+        return $this->cartResponse($cart);
     }
 
     /**
@@ -63,7 +66,6 @@ class CartController extends Controller
     {
         $data = $request->validated();
         $user = $request->user();
-
         $cart = Cart::where('user_id', $user->id)
             ->where('id', $id)
             ->first();
@@ -74,13 +76,8 @@ class CartController extends Controller
 
         $cart->quantity = $data['quantity'];
         $cart->save();
-
-        $carts = Cart::where('user_id', $user->id)->with('product')->get();
-
-        return response(new CartCollection($carts), 201);
+        return $this->cartResponse($cart);
     }
-
-
 
     /**
      * Remove the specified resource from storage.
@@ -88,24 +85,19 @@ class CartController extends Controller
     public function destroy($userId)
     {
         Cart::where('user_id', $userId)->delete();
-
         $carts = Cart::where('user_id', $userId)->get();
-
-        return response(new CartCollection($carts), 201);
+        return new CartCollection($carts);
     }
 
     public function destroyItem($userId, $cartId)
     {
         $cart = Cart::where('user_id', $userId)->where('id', $cartId)->first();
-
         if (!$cart) {
             return response()->json(['message' => 'Cart not found'], 404);
         }
 
         $cart->delete();
-
         $carts = Cart::where('user_id', $userId)->with('product')->get();
-
-        return response(new CartCollection($carts), 201);
+        return new CartCollection($carts);
     }
 }

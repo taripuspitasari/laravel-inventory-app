@@ -18,8 +18,7 @@ class AddressController extends Controller
     {
         $user = $request->user();
         $addresses = Address::where('user_id', $user->id)->get();
-
-        return response(AddressResource::collection($addresses), 200);
+        return AddressResource::collection($addresses);
     }
 
     /**
@@ -29,8 +28,7 @@ class AddressController extends Controller
     {
         $data = $request->validated();
         $user = $request->user();
-
-        Address::create([
+        $address = Address::create([
             'user_id' => $user->id,
             'name' => $data['name'],
             'city' => $data['city'],
@@ -38,10 +36,7 @@ class AddressController extends Controller
             'postal_code' => $data['postal_code'],
             'phone_number' => $data['phone_number']
         ]);
-
-        $addresses = Address::where('user_id', $user->id)->get();
-
-        return response(AddressResource::collection($addresses), 200);
+        return new AddressResource($address);
     }
 
     /**
@@ -50,8 +45,7 @@ class AddressController extends Controller
     public function show(string $id)
     {
         $address = Address::findOrFail($id);
-
-        return response(new AddressResource($address), 201);
+        return new AddressResource($address);
     }
 
     /**
@@ -60,10 +54,7 @@ class AddressController extends Controller
     public function update(UpdateAddressRequest $request, string $id)
     {
         $data = $request->validated();
-        $user = $request->user();
-
         $address = Address::findOrFail($id);
-
         $address->update([
             'name' => $data['name'],
             'city' => $data['city'],
@@ -71,10 +62,7 @@ class AddressController extends Controller
             'postal_code' => $data['postal_code'],
             'phone_number' => $data['phone_number']
         ]);
-
-        $addresses = Address::where('user_id', $user->id)->get();
-
-        return response(AddressResource::collection($addresses), 200);
+        return new AddressResource($address);
     }
 
     /**
@@ -83,12 +71,8 @@ class AddressController extends Controller
     public function destroy(Request $request, string $id)
     {
         $user = $request->user();
-
         $address = Address::findOrFail($id);
         $address->delete();
-
-        $addresses = Address::where('user_id', $user->id)->get();
-
-        return response(AddressResource::collection($addresses), 200);
+        return response()->noContent();
     }
 }
