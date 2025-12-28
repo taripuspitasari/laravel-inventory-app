@@ -1,41 +1,21 @@
 @extends('layouts.main')
 @section('container')
-<div class="md:px-10">
-    <div class="flex flex-col w-full mb-10 space-y-7">
-        <div class="font-light text-gray-500 dark:text-gray-400 md:w-1/2 mx-auto">
-            <h2 class="text-xl md:text-4xl font-extrabold text-gray-900 dark:text-white text-center my-4 ">A smart solution for managing inventory efficiently and effortlessly.</h2>
-            <p class="text-center font-normal">Stockmate is designed to help users monitor their inventory in real time.</p>
-            <div class="flex justify-center mt-3">
-                <a href="/register" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Get Started</a>
+<div>
+    <div class="mx-auto max-w-2xl py-16">
+        <div class="hidden sm:mb-8 sm:flex sm:justify-center">
+            <div class="relative rounded-full px-3 py-1 text-sm/6 text-gray-600 ring-1 ring-gray-900/10">
+            Inventory Management System
             </div>
         </div>
-        <div>
-            <h3 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white text-center"> Features</h3>
-            <ul class="grid md:grid-rows-1 md:grid-flow-col gap-4">
-                <li class="border border-slate-200 shadow-md py-2 px-6 rounded-md hover:scale-110 transform transition duration-150 ease-in-out">
-                    <h4 class="font-bold mb-2">Manage Product </h4>
-                    <p class="font-normal text-sm text-gray-500">Add, update, and track inventory items.</p>
-                </li>
-                <li class="border border-slate-200 shadow-md py-2 px-6  rounded-md hover:scale-110 transform transition duration-150 ease-in-out">
-                    <h4 class="font-bold mb-2">Organize Categories </h4>
-                    <p class="font-normal text-gray-500">Keep stock structured with categories.</p>
-                </li>
-                <li class="border border-slate-200 shadow-md py-2 px-6  rounded-md hover:scale-110 transform transition duration-150 ease-in-out">
-                    <h4 class="font-bold mb-2">Supplier and Customer Records </h4>
-                    <p class="font-normal text-gray-500">Manage business partners in one place.</p>
-                </li>
-                <li class="border border-slate-200 shadow-md py-2 px-6  rounded-md hover:scale-110 transform transition duration-150 ease-in-out">
-                    <h4 class="font-bold mb-2">Track Transactions </h4>
-                    <p class="font-normal text-gray-500">Record and monitor sales or purchases.</p>
-                </li>
-                <li class="border border-slate-200 shadow-md py-2 px-6  rounded-md hover:scale-110 transform transition duration-150 ease-in-out">
-                    <h4 class="font-bold mb-2">eCommerce Integration </h4>
-                    <p class="font-normal text-gray-500">Build a connected online store with an API.</p>
-                </li>
-            </ul>
+        <div class="text-center">
+            <h1 class="text-5xl font-semibold tracking-tight text-balance text-gray-900">Organize stock, products, and transactions in one centralized system</h1>
+            <p class="mt-8 text-md font-medium text-pretty text-gray-500">Stockmate is designed to help users monitor their inventory in real time.</p>
+            <div class="mt-10 flex items-center justify-center gap-x-6">
+            <a href="#" class="rounded-md bg-primary-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600">Get started</a>
+            <a href="https://github.com/taripuspitasari/laravel-inventory-app" class="text-sm/6 font-semibold text-gray-900">Learn more <span aria-hidden="true">→</span></a>
+            </div>
         </div>
     </div>
-    <hr>
-    <p class="text-sm text-center md:text-right text-slate-400 my-2">&copy; {{ date('Y') }} Tari | Stockmate. All Rights Reserved.</p>
+    <div class="text-xs text-center text-slate-400 mt-3 mb-2">&copy; {{ date('Y') }} Tari | Stockmate. All Rights Reserved.</div>
 </div>
 @endsection
