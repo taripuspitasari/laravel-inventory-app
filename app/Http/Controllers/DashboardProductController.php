@@ -20,9 +20,11 @@ class DashboardProductController extends Controller
      */
     public function index()
     {
+        $categories = Category::all();
         return view('dashboard.products.index', [
-            'products' => $this->productService->getAllProducts(request(['search'])),
-            'title' => 'Products'
+            'products' => $this->productService->getAllProducts(request(['search', 'category'])),
+            'title' => 'Products',
+            'categories' => $categories
         ]);
     }
 

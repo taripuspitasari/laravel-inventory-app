@@ -12,7 +12,7 @@
     </style>
 </head>
 <body>
-    <div x-data="{ isOpen: false }" class="relative lg:flex min-h-screen  bg-slate-200">
+    <div x-data="{ isOpen: false }" class="relative lg:flex min-h-screen bg-slate-200">
         <!-- Sidebar -->
         <div class="absolute z-10 right-0 top-0 lg:static w-32 lg:w-40 lg:flex flex-col lg:justify-between bg-white lg:py-2 shadow-md rounded-r-lg">
             <div>

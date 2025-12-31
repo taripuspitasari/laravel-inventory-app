@@ -20,7 +20,7 @@ class DashboardCategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->categoryService->getAllCategories();
+        $categories = $this->categoryService->getAllCategories(request('search'));
 
         return response()->view('dashboard.categories.index', [
             'title' => 'Categories',

@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Product;
-use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
 
 class ProductService

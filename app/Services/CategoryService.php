@@ -6,9 +6,9 @@ use App\Models\Category;
 
 class CategoryService
 {
-    public function getAllCategories()
+    public function getAllCategories($filter)
     {
-        return Category::all();
+        return Category::filter($filter)->simplePaginate(7)->withQueryString();
     }
 
     public function createCategory($data)

@@ -12,6 +12,15 @@ class Category extends Model
 
     protected $guarded = ['id'];
 
+    public function scopeFilter($query, $search)
+    {
+        $query->when($search ?? false, function ($query, $search) {
+            return $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            });
+        });
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class, "category_id", "id");
