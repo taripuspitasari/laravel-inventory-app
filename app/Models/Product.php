@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -34,15 +32,17 @@ class Product extends Model
         return $this->belongsTo(Category::class, "category_id", "id");
     }
 
-    public function transactionDetails(): HasMany
+    public function purchases()
     {
-        return $this->hasMany(TransactionDetail::class, "product_id", "id");
+        return $this->belongsToMany(Purchase::class, 'purchase_details')
+            ->withPivot('quantity', 'price')
+            ->withTimestamps();
     }
 
-    public function transactions()
+    public function orders()
     {
-        return $this->belongsToMany(Transaction::class, 'transaction_details')
-            ->withPivot('quantity', 'price')
+        return $this->belongsToMany(Order::class, 'order_details')
+            ->withPivot('quantity', 'price', 'subtotal')
             ->withTimestamps();
     }
 }

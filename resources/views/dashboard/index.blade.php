@@ -51,8 +51,8 @@
                                 </path>
                             </svg>
                         </div>
-                        <div class="stat-title">All Transactions</div>
-                        <div class="stat-value">{{ $totalTransactions }}</div>
+                        <div class="stat-title">All Purchases</div>
+                        <div class="stat-value">{{ $totalPurchases }}</div>
                     </div>
                 </div>
             </section>

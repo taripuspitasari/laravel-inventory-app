@@ -136,7 +136,7 @@
         <!-- Main content -->
         <div class="py-2 px-5 lg:flex-1">
             <div class="h-14 min-w-full mb-2 flex justify-between items-center">
-                <div class="text-center text-xl font-semibold">
+                <div class="text-center text-lg font-semibold">
                     <p>{{ $title }}</p>
                 </div>
                 <div class="hidden lg:block text-right text-sm font-semibold">
