@@ -58,8 +58,8 @@ class DashboardSupplierController extends Controller
     {
         return view('dashboard.suppliers.show', [
             'supplier' => $supplier,
-            'title' => 'Supplier Detail',
-            'transactions' => $supplier->transactions()->paginate(5)
+            'title' => 'Supplier Information',
+            'purchases' => $supplier->purchases()->latest()->paginate(5)
         ]);
     }
 
