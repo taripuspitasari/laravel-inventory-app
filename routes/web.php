@@ -41,7 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::resource('/dashboard/products', DashboardProductController::class);
     Route::resource('/dashboard/categories', DashboardCategoryController::class);
-    Route::resource('/dashboard/partners', DashboardPartnerController::class);
     Route::resource('/dashboard/suppliers', DashboardSupplierController::class);
 
     Route::controller(DashboardPurchaseController::class)->group(function () {
