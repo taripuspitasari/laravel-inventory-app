@@ -55,7 +55,7 @@
                             <p>Suppliers</p>
                         </a>
                     </li>
-                    <li class="py-2 px-3 font-medium">Transaction</li>
+                    <li class="py-2 px-3 font-medium">Transactions</li>
                     <li class="p-1">
                         <a href="/dashboard/purchases" class="{{ Request::is('dashboard/purchases*') ? 'bg-primary-700 text-white' : 'bg-white text-gray-800' }} flex items-center gap-2 p-2 rounded-lg hover:bg-primary-700 hover:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
