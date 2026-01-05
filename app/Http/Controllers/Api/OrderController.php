@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $orders = $user->orders;
+        $orders = $user->orders->latest()->get();
         return OrderResource::collection($orders);
     }
 
@@ -44,8 +44,7 @@ class OrderController extends Controller
                 'address_id' => $data['address_id'],
                 'payment_method' => $data['payment_method'],
                 'total_amount' => $totalAmount,
-                'payment_status' => 'pending',
-                'order_status' => 'pending'
+                'order_status' => $data['payment_method'] === 'cash' ? 'processed' : 'pending'
             ]);
 
             foreach ($cartItems as $item) {
@@ -75,7 +74,6 @@ class OrderController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
 
     public function show($id)
     {

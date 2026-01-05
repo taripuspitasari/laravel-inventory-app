@@ -11,7 +11,7 @@ class DashboardOrderController extends Controller
     {
         return view('dashboard.orders.index', [
             "title" => "Orders",
-            "orders" => Order::with('user')->filter(request(['search', 'filter']))->simplePaginate(7)
+            "orders" => Order::with('user')->filter(request(['search', 'filter']))->latest()->simplePaginate(7)
         ]);
     }
 
@@ -30,19 +30,16 @@ class DashboardOrderController extends Controller
     public function edit(Order $order)
     {
         $order->load(['address', 'orderDetails.product', 'user']);
-        $total_items = $order->orderDetails->count();
 
         return view('dashboard.orders.edit', [
             "title" => "Edit Order",
             "order" => $order,
-            "totalItems" => $total_items
         ]);
     }
 
     public function update(Request $request, Order $order)
     {
         $validatedData = $request->validate([
-            'payment_status' => ['required'],
             'order_status' => ['required']
         ]);
 

@@ -23,7 +23,7 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'address_id' => ['required', 'exists:addresses,id'],
-            'payment_method' => ['required', 'string', 'in:bank_transfer,qr,cod']
+            'payment_method' => ['required', 'string', 'in:transfer,wallet,cash']
         ];
     }
 }
