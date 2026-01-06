@@ -55,5 +55,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard/orders/{order}', 'show');
         Route::get('/dashboard/orders/{order}/edit', 'edit');
         Route::put('/dashboard/orders/{order}', 'update');
+        Route::put('/dashboard/orders/{order}/cancel', 'cancel');
     });
 });

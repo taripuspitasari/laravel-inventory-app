@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardOrderController extends Controller
 {
@@ -46,5 +47,33 @@ class DashboardOrderController extends Controller
         $order->update($validatedData);
 
         return redirect('dashboard/orders')->with('success', 'The order has been updated!');
+    }
+
+    public function cancel(Order $order)
+    {
+        if ($order->order_status === 'canceled') {
+            return back()->with('error', 'Order cannot be canceled');
+        }
+
+        if ($order->order_status !== 'pending') {
+            return back()->with('error', 'Order cannot be canceled');
+        }
+
+        try {
+            DB::beginTransaction();
+            foreach ($order->orderDetails as $item) {
+                $item->product->increment('stock', $item->quantity);
+            }
+
+            $order->update([
+                'order_status' => 'canceled'
+            ]);
+
+            DB::commit();
+            return redirect('dashboard/orders')->with('success', 'The order has been canceled and stock returned!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'The order cannot be canceled');
+        }
     }
 }

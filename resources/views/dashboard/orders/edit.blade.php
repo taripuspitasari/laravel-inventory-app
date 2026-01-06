@@ -103,7 +103,6 @@
         <option value="processed" {{ old('order_status', $order->order_status) == 'processed' ? 'selected' : '' }}>Processed</option>
         <option value="shipped" {{ old('order_status', $order->order_status) == 'shipped' ? 'selected' : '' }}>Shipped</option>
         <option value="completed" {{ old('order_status', $order->order_status) == 'completed' ? 'selected' : '' }}>Completed</option>
-        <option value="canceled" {{ old('order_status', $order->order_status) == 'canceled' ? 'selected' : '' }}>Canceled</option>
     </select>
     </label>
 

@@ -42,7 +42,7 @@ class DashboardSupplierController extends Controller
     {
         $validatedData = $request->validate([
             'name' => ['required', 'min:3', 'max:255'],
-            'email' => ['required', 'email:dns', 'unique:partners'],
+            'email' => ['required', 'email:dns', 'unique:suppliers'],
             'phone' => ['required', 'regex:/^[0-9]{10,15}$/'],
             'address' => ['required', 'min:7', 'max:255']
         ]);

@@ -139,6 +139,37 @@
                 <div class="text-center text-lg font-semibold">
                     <p>{{ $title }}</p>
                 </div>
+
+                @if(session()->has('success'))
+                <div x-data="{show:true}" x-init="setTimeout(()=> show = false, 5000)" x-show="show" role="alert" class="alert alert-success absolute z-10 w-max md:right-5 top-6">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6 shrink-0 stroke-current text-white"
+                        fill="none"
+                        viewBox="0 0 24 24">
+                        <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-white">{{ session('success') }}</span>
+                </div>
+                @endif
+
+                @if(session()->has('error'))
+                <div x-data="{show:true}" x-init="setTimeout(()=> show = false, 5000)" x-show="show" role="alert" class="alert alert-error absolute z-10 w-max md:right-5 top-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current text-white" fill="none" viewBox="0 0 24 24">
+                        <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span class="text-white">{{ session('error') }}</span>
+                </div>
+                @endif
+
                 <div class="hidden lg:block text-right text-sm font-semibold">
                     <p>{{ auth()->user()->name }}</p>
                 </div>
