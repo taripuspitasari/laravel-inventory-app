@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardProductController;
 use App\Http\Controllers\DashboardCategoryController;
 use App\Http\Controllers\DashboardPurchaseController;
 use App\Http\Controllers\DashboardSupplierController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     return view('index');
@@ -56,5 +57,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard/orders/{order}/edit', 'edit');
         Route::put('/dashboard/orders/{order}', 'update');
         Route::put('/dashboard/orders/{order}/cancel', 'cancel');
+    });
+
+    Route::controller(ReportController::class)->group(function () {
+        Route::get('/dashboard/reports/current-stock', 'currentStockForm');
+        Route::get('/dashboard/reports/current-stock-generate', 'currentStock');
+        Route::get('/dashboard/reports/sales', 'salesForm');
+        Route::get('/dashboard/reports/sales-generate', 'sales');
     });
 });

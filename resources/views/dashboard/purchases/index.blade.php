@@ -31,6 +31,7 @@
                 <th>Date</th>
                 <th>Invoice</th>
                 <th>Amount</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -38,8 +39,9 @@
             <tr>
                 <td>{{ $loop->iteration + ($purchases->currentPage()-1) * $purchases->perPage() }}</td>
                 <td>{{ $purchase->created_at->format('Y-m-d') }}</td>
-                <td><a href="/dashboard/purchases/{{ $purchase->id }}">{{ $purchase->invoice_number }}</a></td>
+                <td>{{ $purchase->invoice_number }}</td>
                 <td class="whitespace-nowrap">Rp. {{ number_format($purchase->total_amount, 0, ',', '.') }}</td>
+                <td class="whitespace-nowrap text-xs text-gray-400 hover:text-primary-700 cursor-pointer"><a href="/dashboard/purchases/{{ $purchase->id }}">See Details</a></td>
             </tr>
             @empty
             <tr>

@@ -24,7 +24,8 @@ class DashboardProductController extends Controller
         return view('dashboard.products.index', [
             'products' => $this->productService->getAllProducts(request(['search', 'category'])),
             'title' => 'Products',
-            'categories' => $categories
+            'categories' => $categories,
+            'category' => Category::find(request('category'))
         ]);
     }
 

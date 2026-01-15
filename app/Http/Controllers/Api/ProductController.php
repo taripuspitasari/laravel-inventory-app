@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->filter(request(['search', 'category']))->simplePaginate(10)->withQueryString();
+        $products = Product::with('category')->filter(request(['search', 'category']))->paginate(10)->withQueryString();
         return ProductResource::collection($products);
     }
 

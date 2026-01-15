@@ -13,7 +13,7 @@ class PurchaseService
 {
     public function getAllPurchases($filters)
     {
-        return Purchase::filter($filters)->with('supplier')->simplePaginate(7)->withQueryString();
+        return Purchase::filter($filters)->with('supplier')->latest()->simplePaginate(7)->withQueryString();
     }
 
     public function createPurchase($data, $invoiceNumber)
