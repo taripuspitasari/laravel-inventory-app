@@ -6,8 +6,8 @@
         <div class="overflow-x-auto rounded-md bg-base-100">
             <table>
                 <tr>
-                    <td class="text-gray-500 w-36">Order ID</td>
-                    <td class="w-44 capitalize">{{ $order->id}}</td>
+                    <td class="text-gray-500 w-36">Order Number</td>
+                    <td class="w-44 capitalize">{{ $order->order_number}}</td>
                     <td class="text-gray-500 font-normal text-left w-44">Customer</td>
                     <td class="text-gray-500 font-normal text-left w-44">Shipping To</td>
                 </tr>

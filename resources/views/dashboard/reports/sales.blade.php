@@ -23,7 +23,7 @@
 <tr>
     <th>No</th>
     <th>Date</th>
-    <th>Invoice</th>
+    <th>Order Number</th>
     <th>Items</th>
     <th>Total</th>
 </tr>
@@ -33,7 +33,7 @@
 <tr>
     <td class="center">{{ $i + 1 }}</td>
     <td>{{ $order->created_at->format('d M Y') }}</td>
-    <td>{{ $order->id }}</td>
+    <td>{{ $order->order_number }}</td>
     <td>
         <ul style="padding-left:12px;">
             @foreach($order->orderDetails as $item)

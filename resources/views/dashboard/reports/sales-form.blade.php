@@ -31,7 +31,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Order ID</th>
+                <th>Order Number</th>
                 <th>Customer Name</th>
                 <th>Date</th>
                 <th>Amount</th>
@@ -42,7 +42,7 @@
             <tbody>
             @forelse($orders as $order)
             <tr>
-                <th><a href="/dashboard/orders/{{ $order->id }}">{{ $order->id }}</a></th>
+                <th><a class="font-normal" href="/dashboard/orders/{{ $order->id }}">{{ $order->order_number }}</a></th>
                 <td class="whitespace-nowrap">{{ $order->user->name }}</td>
                 <td>{{ $order->created_at->format('Y-m-d') }}</td>
                 <td class="whitespace-nowrap">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>

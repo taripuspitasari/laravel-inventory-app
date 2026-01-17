@@ -17,13 +17,15 @@ class OrderResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'address' => new AddressResource($this->address),
+            'order_number' => $this->order_number,
             'payment_method' => $this->payment_method,
-            'payment_status' => $this->payment_status,
             'order_status' => $this->order_status,
             'total_amount' => $this->total_amount,
             'created_at' => $this->created_at->format('M d, Y'),
-            'order_details' => OrderDetailResource::collection($this->orderDetails),
+            'address' => new AddressResource($this->whenLoaded('address')),
+            'order_details' => OrderDetailResource::collection(
+                $this->whenLoaded('orderDetails')
+            ),
         ];
     }
 }
