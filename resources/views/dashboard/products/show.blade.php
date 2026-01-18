@@ -19,62 +19,35 @@
     </div>
 
     <div class="space-y-2">
-        <h3 class="font-semibold text-md">Recent Purchases</h3>
+        <h3 class="font-semibold text-md">Stock Movements</h3>
         <div class="overflow-x-auto rounded-md border border-base-content/5 bg-base-100">
             <table class="table">
                 <thead>
                 <tr>
                     <th>Date</th>
-                    <th>Invoice</th>
+                    <th>Type</th>
                     <th>Quantity</th>
+                    <th>Reference</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($purchases as $purchase)
+                @forelse($stockMovements as $movement)
                 <tr>
-                    <td>{{  $purchase->created_at->format('Y-m-d') }}</td>
-                    <td><a href="/dashboard/purchases/{{ $purchase->id }}">{{ $purchase->invoice_number }}</a></td>
-                    <td>{{ $purchase->pivot->quantity }}</td>
+                    <td>{{  $movement->created_at->format('Y-m-d') }}</td>
+                    <td class="uppercase">{{ $movement->type }}</td>
+                    <td>{{ $movement->quantity }}</td>
+                    <td>{{ $movement->reference_type }}</td>
                 </tr>
                 @empty
                 <tr>
-                    <td>No purchases found</td>
+                    <td>No movement history yet</td>
                 </tr>
                 @endforelse
                 </tbody>
             </table>
         </div>
-        {{ $purchases->links() }}
+        {{ $stockMovements->links() }}
     </div>
 
-
-    <div class="space-y-2">
-        <h3 class="font-semibold text-md">Recent Orders</h3>
-        <div class="overflow-x-auto rounded-md border border-base-content/5 bg-base-100">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Order ID</th>
-                    <th>Quantity</th>
-                </tr>
-                </thead>
-                <tbody>
-                @forelse($orders as $order)
-                <tr>
-                    <td>{{  $order->created_at->format('Y-m-d') }}</td>
-                    <td><a href="/dashboard/orders/{{ $order->id }}">{{ $order->id }}</a></td>
-                    <td>{{ $order->pivot->quantity }}</td>
-                </tr>
-                @empty
-                <tr>
-                    <td>No orders found</td>
-                </tr>
-                @endforelse
-                </tbody>
-            </table>
-        </div>
-        {{ $orders->links() }}
-    </div>
 </section>
 @endsection

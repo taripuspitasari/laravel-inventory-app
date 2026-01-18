@@ -69,9 +69,8 @@ class DashboardProductController extends Controller
         return view('dashboard.products.show', [
             'product' => $product,
             'title' => 'Product Detail',
-            'purchases' => $product->purchases()->latest()->simplePaginate(5, ['*'], 'purchases_page'),
-            'orders' => $product->orders()->latest()->simplePaginate(5, ['*'], 'orders_page'),
-            'category' => $product->category->name
+            'category' => $product->category->name,
+            'stockMovements' => $product->stockMovements()->latest()->simplePaginate(5)
         ]);
     }
 

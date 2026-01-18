@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Resources\OrderResource;
+use App\Models\StockMovement;
 
 class OrderController extends Controller
 {
@@ -69,6 +70,14 @@ class OrderController extends Controller
                     'quantity' => $item->quantity,
                     'price' => $item->product->price,
                     'subtotal' => $item->quantity * $item->product->price,
+                ]);
+
+                StockMovement::create([
+                    'product_id' => $item->product_id,
+                    'type' => 'out',
+                    'quantity' => $item->quantity,
+                    'reference_type' => 'Order',
+                    'reference_id' => $order->id,
                 ]);
 
                 $item->product->decrement('stock', $item->quantity);

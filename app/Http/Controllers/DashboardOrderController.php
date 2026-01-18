@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\StockMovement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -44,6 +45,10 @@ class DashboardOrderController extends Controller
             'order_status' => ['required']
         ]);
 
+        if ($order->order_status === 'canceled') {
+            return back()->with('error', 'Order already canceled');
+        }
+
         $order->update($validatedData);
 
         return redirect('dashboard/orders')->with('success', 'The order has been updated!');
@@ -63,6 +68,14 @@ class DashboardOrderController extends Controller
             DB::beginTransaction();
             foreach ($order->orderDetails as $item) {
                 $item->product->increment('stock', $item->quantity);
+
+                StockMovement::create([
+                    'product_id' => $item->product_id,
+                    'type' => 'in',
+                    'quantity' => $item->quantity,
+                    'reference_type' => 'Order',
+                    'reference_id' => $order->id,
+                ]);
             }
 
             $order->update([

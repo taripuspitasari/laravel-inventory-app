@@ -42,13 +42,16 @@ class DashboardPurchaseController extends Controller
             'date' => ['required', 'date'],
             'supplier_id' => ['required', 'exists:suppliers,id'],
             'notes' => ['nullable'],
+            'invoice_number' => ['required'],
             'items' => ['required', 'array'],
             'items.*.item_id' => ['required', 'exists:products,id'],
             'items.*.quantity' => ['required', 'integer', 'min:1'],
             'items.*.price' => ['required', 'numeric', 'min:0.01']
         ]);
 
-        $response = $this->purchaseService->createPurchase($validatedData, $request['invoice_number']);
+        // $response = $this->purchaseService->createPurchase($validatedData, $request['invoice_number']);
+
+        $response = $this->purchaseService->createPurchase($validatedData);
 
         if ($response['success']) {
             return redirect('dashboard/purchases')->with('success', $response['message']);

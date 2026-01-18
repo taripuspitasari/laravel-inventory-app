@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\Product;
+use App\Models\StockMovement;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -16,14 +17,14 @@ class PurchaseService
         return Purchase::filter($filters)->with('supplier')->latest()->simplePaginate(7)->withQueryString();
     }
 
-    public function createPurchase($data, $invoiceNumber)
+    public function createPurchase($data)
     {
         try {
             DB::beginTransaction();
 
             $purchase = Purchase::create([
                 'purchase_date' => $data['date'],
-                'invoice_number' => $invoiceNumber,
+                'invoice_number' => $data['invoice_number'],
                 'supplier_id' => $data['supplier_id'],
                 'notes' => $data['notes'],
                 'total_amount' => 0,
@@ -31,11 +32,11 @@ class PurchaseService
                 'user_id' => Auth::user()->id,
             ]);
 
-            $total_amount = 0;
+            $totalAmount = 0;
 
             foreach ($data['items'] as $item) {
                 $subtotal = $item['price'] * $item['quantity'];
-                $total_amount += $subtotal;
+                $totalAmount += $subtotal;
 
                 PurchaseDetail::create([
                     'product_id' => $item['item_id'],
@@ -47,10 +48,18 @@ class PurchaseService
                 $currentItem = Product::find($item['item_id']);
                 $currentItem->stock += $item['quantity'];
                 $currentItem->save();
+
+                StockMovement::create([
+                    'product_id' => $item['item_id'],
+                    'type' => 'in',
+                    'quantity' => $item['quantity'],
+                    'reference_type' => 'Purchase',
+                    'reference_id' => $purchase->id,
+                ]);
             }
 
-            $purchase->tax = $total_amount * 0.11;
-            $purchase->total_amount = $total_amount + $purchase->tax;
+            $purchase->tax = $totalAmount * 0.11;
+            $purchase->total_amount = $totalAmount + $purchase->tax;
             $purchase->save();
 
             DB::commit();
