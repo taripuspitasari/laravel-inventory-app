@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/MPJncr1y9VQeMNuvVvZFhea3awGtJyw7p5VQyMrW.jpg',
             'stock' => 0,
             'price' => 40000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/M61GU7XhnIJij7kD4oRvkwZHBLuYymBAB5hhhR72.jpg',
             'stock' => 0,
             'price' => 45000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -40,7 +40,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/nsWMYGRWqoYUz6zYTykg4duEEAxxyscWgtDAOapH.jpg',
             'stock' => 0,
             'price' => 40000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -50,7 +50,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/0HuiYkyMoYIGiEQyTOf88t0gmad38gMFr11NRJFC.jpg',
             'stock' => 0,
             'price' => 45000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -60,7 +60,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/GVGTjxtusraPrOEV7tPtoY9zhEiCdLVCRG3kGrwQ.jpg',
             'stock' => 0,
             'price' => 35000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -70,7 +70,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/v4hO1UvB12EQJDA6iymkIysUSZ4d8lu1wLrBDVeS.jpg',
             'stock' => 0,
             'price' => 17000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -80,7 +80,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/8tnrd3gOIc3PKk2BgWI3GyQXCU3pOhnUr0Ho3KB9.jpg',
             'stock' => 0,
             'price' => 15000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -90,7 +90,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/5lsDAf4KR3Az135eDf3QsBH1PR5ByK7DAnAFAXbh.jpg',
             'stock' => 0,
             'price' => 15000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -100,7 +100,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/yqm2fvyXPQMBpNYeM9PIX5WoeRiWsugfEM3Wgdc8.jpg',
             'stock' => 0,
             'price' => 45000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
 
         Product::create([
@@ -110,7 +110,7 @@ class ProductSeeder extends Seeder
             'image' => 'products-images/k1grWO2ccyKbnUu1TD8tWSFsnlV4W6AMevtjyBSM.jpg',
             'stock' => 0,
             'price' => 10000,
-            'isActive' => true,
+            'low_stock_threshold' => 10,
         ]);
     }
 }

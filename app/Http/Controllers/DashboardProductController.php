@@ -50,6 +50,7 @@ class DashboardProductController extends Controller
             'name' => ['required', 'min:3', 'max:255'],
             'category_id' => ['required'],
             'stock' => ['required', 'integer'],
+            'low_stock_threshold' => ['required', 'integer'],
             'price' => ['required', 'min:1'],
             'image' => ['image', 'file', 'max:1024'],
             'description' => ['required']
@@ -96,6 +97,7 @@ class DashboardProductController extends Controller
             'name' => ['required', 'min:3', 'max:255'],
             'category_id' => ['required'],
             'stock' => ['required', 'integer'],
+            'low_stock_threshold' => ['required', 'integer'],
             'price' => ['required', 'min:1'],
             'description' => ['required']
         ]);

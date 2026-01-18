@@ -45,6 +45,18 @@
         @enderror
     </label>
 
+    <label for="low_stock_threshold" class="form-control w-full max-w-xs">
+        <div class="label">
+            <span class="label-text">Low Stock Threshold</span>
+        </div>
+        <input name="low_stock_threshold" id="low_stock_threshold" type="number" placeholder="Type here" class="input input-bordered w-full max-w-xs" required value="{{ old('low_stock_threshold') }}"/>
+        @error('low_stock_threshold')
+        <div class="label">
+            <span class="label-text-alt text-red-600">{{ $message }}</span>
+        </div>
+        @enderror
+    </label>
+
     <label for="price" class="form-control w-full max-w-xs">
         <div class="label">
             <span class="label-text">Selling Price</span>

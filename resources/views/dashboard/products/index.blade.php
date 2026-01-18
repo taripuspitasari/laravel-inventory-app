@@ -72,10 +72,10 @@
                 <td class="text-nowrap"><a href="/dashboard/products/{{ $product->id }}">{{ $product->name }}</a></td>
                 <td class="text-nowrap">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                 <td>{{ $product->stock }}</td>
-                <td>{{ $product->category->name }}</td>
+                <td class="">{{ $product->category->name }}</td>
                 <td>
-                    <div class="{{ $product->isActive ? 'text-lime-500' : 'text-rose-500' }}">
-                        <p>{{ $product->isActive ? 'Active' : 'Out of stock' }}</p>
+                    <div class="{{ $product->stockStatus()->color }}">
+                        <p>{{ $product->stockStatus()->label }}</p>
                     </div>
                 </td>
                 <td x-data="{open:false}" class="relative">

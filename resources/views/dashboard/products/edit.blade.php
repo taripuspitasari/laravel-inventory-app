@@ -40,8 +40,22 @@
         <div class="label">
             <span class="label-text">Total Stock</span>
         </div>
-        <input name="stock" id="stock" type="number" placeholder="Type here" class="input input-bordered w-full max-w-xs" required value="{{ old('stock', $product->stock) }}"/>
+        <input name="stock" id="stock" type="number" placeholder="Type here" class="input input-bordered w-full max-w-xs" required 
+        value="{{ old('stock', $product->stock) }}"/>
         @error('stock')
+        <div class="label">
+            <span class="label-text-alt text-red-600">{{ $message }}</span>
+        </div>
+        @enderror
+    </label>
+
+    <label for="low_stock_threshold" class="form-control w-full max-w-xs">
+        <div class="label">
+            <span class="label-text">Low Stock Threshold</span>
+        </div>
+        <input name="low_stock_threshold" id="low_stock_threshold" type="number" placeholder="Type here" class="input input-bordered w-full max-w-xs" required 
+        value="{{ old('low_stock_threshold', $product->low_stock_threshold) }}"/>
+        @error('low_stock_threshold')
         <div class="label">
             <span class="label-text-alt text-red-600">{{ $message }}</span>
         </div>

@@ -25,5 +25,6 @@ export default {
             },
         },
     },
+    safelist: ["text-rose-500", "text-amber-300", "text-lime-500"],
     plugins: [require("flowbite/plugin"), require("daisyui")],
 };

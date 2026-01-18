@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
 
@@ -49,5 +50,24 @@ class Product extends Model
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class, 'product_id', 'id');
+    }
+
+    public function stockStatus()
+    {
+        if ($this->stock == 0) {
+            return (object) [
+                'label' => 'Out of stock',
+                'color' => 'text-rose-500'
+            ];
+        }
+
+        if ($this->stock <= $this->low_stock_threshold) {
+            return (object) [
+                'label' => 'Low stock',
+                'color' => 'text-amber-300'
+            ];
+        }
+
+        return (object) ['label' => 'In stock', 'color' => 'text-lime-500'];
     }
 }

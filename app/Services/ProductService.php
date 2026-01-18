@@ -18,8 +18,6 @@ class ProductService
             $data['image'] = $data['image']->store('products-images');
         }
 
-        $data['isActive'] = $data['stock'] > 0;
-
         return Product::create($data);
     }
 
@@ -31,8 +29,6 @@ class ProductService
             }
             $data['image'] = $data['image']->store('products-images');
         }
-
-        $data['isActive'] = $data['stock'] > 0;
 
         return $product->update($data);
     }
